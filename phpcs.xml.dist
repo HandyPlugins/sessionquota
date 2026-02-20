@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<ruleset name="Session Limiter">
+	<description>WordPress Coding Standards for Session Limiter</description>
+
+	<!-- Files to check -->
+	<file>.</file>
+
+	<!-- Exclude patterns -->
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/assets/*</exclude-pattern>
+	<exclude-pattern>*/languages/*</exclude-pattern>
+
+	<!-- Show sniff codes in all reports -->
+	<arg value="ps"/>
+
+	<!-- Show progress -->
+	<arg name="colors"/>
+	<arg name="extensions" value="php"/>
+	<arg name="parallel" value="8"/>
+
+	<!-- Rules -->
+	<rule ref="WordPress">
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+	</rule>
+
+	<rule ref="WordPress-Extra"/>
+	<rule ref="WordPress-Docs"/>
+
+	<!-- Minimum PHP version -->
+	<config name="testVersion" value="7.4-"/>
+	<rule ref="PHPCompatibilityWP"/>
+
+	<!-- Text domain check -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="session-limiter"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Prefix for hooks and global functions -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="session_limiter"/>
+				<element value="SessionLimiter"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

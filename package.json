@@ -1,0 +1,32 @@
+{
+  "name": "session-limiter",
+  "version": "1.0.0",
+  "description": "Limit concurrent user sessions in WordPress with simple session management",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "bash ../session-limiter-core/scripts/sync-vendors.sh",
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "format:js": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "make-pot": "wp i18n make-pot . languages/session-limiter.pot --domain='session-limiter' --exclude=node_modules,vendor",
+    "make-json": "wp i18n make-json languages --no-purge",
+    "build:release": "npm install --include=dev && npm run build && composer install --no-dev && npm run make-pot && npm run make-json",
+    "lint:release": "npm install && composer install && npm run lint:js && npm run lint:css"
+  },
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "session",
+    "security"
+  ],
+  "author": "HandyPlugins",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "@wordpress/scripts": "^27.0.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0"
+  }
+}
