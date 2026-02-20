@@ -67,7 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</ul>
 			</div>
 
-            <a href="https://handyplugins.co/session-limiter-pro/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-md shadow-sm !text-white !no-underline bg-indigo-600 hover:!bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+			<a href="https://handyplugins.co/session-limiter-pro/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-md shadow-sm !text-white !no-underline bg-indigo-600 hover:!bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 				<?php esc_html_e( 'Upgrade to PRO', 'session-limiter' ); ?>
 				<svg class="ml-2 -mr-0.5 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
 					<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
