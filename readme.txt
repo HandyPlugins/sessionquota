@@ -48,6 +48,7 @@ Session Limiter Pro adds advanced controls and management features such as:
 - Force logout users and bulk session management
 - Frontend session management for users
 - WordPress Multisite support
+- Advanced monitoring and logging of session activity
 - WP-CLI commands for automation
 - Export/Import settings
 - Priority support
@@ -60,7 +61,7 @@ Documentation and guides: https://handyplugins.co/docs-category/session-limiter-
 
 = Contributing & Bug Reports =
 
-Bug reports and pull requests are welcome on GitHub: https://github.com/handyplugins/session-limiter
+Bug reports and pull requests are welcome on GitHub: https://github.com/HandyPlugins/session-limiter
 
 == Installation ==
 
@@ -88,8 +89,6 @@ Go to `Settings -> Session Limiter` in wp-admin.
 = Can Free and Pro be active at the same time? =
 No. Only one Session Limiter edition should be active.
 
-= Does uninstall remove plugin data? =
-Yes. If no other Session Limiter edition is installed, uninstall cleanup removes plugin options and related data created by the plugin.
 
 == Changelog ==
 
