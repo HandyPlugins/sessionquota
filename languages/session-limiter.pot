@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-19T18:38:46+00:00\n"
+"POT-Creation-Date: 2026-02-20T11:48:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: session-limiter\n"
 
 #. Plugin Name of the plugin
@@ -53,43 +53,71 @@ msgstr ""
 msgid "Enforcement Mode"
 msgstr ""
 
-#: includes/Admin/Settings.php:366
+#: includes/Admin/Settings.php:355
 msgid "Configure how Session Limiter handles concurrent user sessions."
 msgstr ""
 
-#: includes/Admin/Settings.php:379
+#: includes/Admin/Settings.php:368
 msgid "Maximum number of concurrent sessions allowed per user. Set to 0 for unlimited sessions (session limiting disabled)."
 msgstr ""
 
-#: includes/Admin/Settings.php:410
+#: includes/Admin/Settings.php:399
 msgid "Set the session limit to 1 or higher to enable block and logout-oldest modes. Strict mode remains available."
 msgstr ""
 
+#: includes/Admin/Settings.php:421
+msgid "Block mode options"
+msgstr ""
+
 #: includes/Admin/Settings.php:424
+msgid "Allow blocked users to recover access via email"
+msgstr ""
+
+#: includes/Admin/Settings.php:427
+msgid "When a login is blocked due to the session limit, the user can request a one-time email link to log out other active sessions and try again."
+msgstr ""
+
+#: includes/Admin/Settings.php:432
+msgid "Email Cooldown (minutes)"
+msgstr ""
+
+#: includes/Admin/Settings.php:436
+msgid "Recovery Link Expiry (minutes)"
+msgstr ""
+
+#: includes/Admin/Settings.php:444
+msgid "Available in Pro."
+msgstr ""
+
+#: includes/Admin/Settings.php:447
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: includes/Admin/Settings.php:462
 msgid "Prevent new login when limit is reached. User must logout from another device first."
 msgstr ""
 
-#: includes/Admin/Settings.php:425
+#: includes/Admin/Settings.php:463
 msgid "Remove only the oldest session(s) needed to stay within the limit. Respects the session limit setting."
 msgstr ""
 
-#: includes/Admin/Settings.php:426
+#: includes/Admin/Settings.php:464
 msgid "Always logout ALL other sessions on new login, keeping only the current session. Ignores the session limit."
 msgstr ""
 
-#: includes/Admin/Settings.php:455
+#: includes/Admin/Settings.php:493
 msgid "General"
 msgstr ""
 
-#: includes/Admin/Settings.php:459
+#: includes/Admin/Settings.php:497
 msgid "Advanced"
 msgstr ""
 
-#: includes/Admin/Settings.php:464
+#: includes/Admin/Settings.php:502
 msgid "Tools"
 msgstr ""
 
-#: includes/Admin/Settings.php:469
+#: includes/Admin/Settings.php:507
 msgid "Monitoring"
 msgstr ""
 
@@ -241,21 +269,6 @@ msgid "Override session limits for specific users regardless of their role."
 msgstr ""
 
 #: includes/Admin/views/advanced.php:191
-#: includes/Admin/views/tools.php:93
-msgid "Search for a user"
-msgstr ""
-
-#: includes/Admin/views/advanced.php:192
-#: includes/Admin/views/tools.php:94
-msgid "Search by username, email, or display name..."
-msgstr ""
-
-#: includes/Admin/views/advanced.php:192
-#: includes/Admin/views/tools.php:94
-msgid "Search users"
-msgstr ""
-
-#: includes/Admin/views/advanced.php:198
 msgid "No user overrides configured."
 msgstr ""
 
@@ -381,6 +394,7 @@ msgstr ""
 
 #. translators: %s: MaxMind signup URL link
 #: includes/Admin/views/monitoring.php:251
+#, php-format
 msgid "Get a free license key from %s to download the GeoLite2 Country database."
 msgstr ""
 
@@ -494,6 +508,7 @@ msgstr ""
 
 #. translators: 1: First item number, 2: Last item number, 3: Total items
 #: includes/Admin/views/monitoring.php:454
+#, php-format
 msgid "Showing %1$s to %2$s of %3$s results"
 msgstr ""
 
@@ -578,7 +593,7 @@ msgstr ""
 
 #: includes/Admin/views/tools.php:85
 #: assets/build/admin.js:1
-#: assets/src/admin.js:363
+#: assets/src/admin.js:375
 msgid "Force Logout User"
 msgstr ""
 
@@ -586,10 +601,22 @@ msgstr ""
 msgid "Search for a user and terminate all their active sessions."
 msgstr ""
 
+#: includes/Admin/views/tools.php:93
+msgid "Search for a user"
+msgstr ""
+
+#: includes/Admin/views/tools.php:94
+msgid "Search by username, email, or display name..."
+msgstr ""
+
+#: includes/Admin/views/tools.php:94
+msgid "Search users"
+msgstr ""
+
 #: includes/Admin/views/tools.php:105
 #: includes/Admin/views/tools.php:126
 #: assets/build/admin.js:2
-#: assets/src/admin.js:411
+#: assets/src/admin.js:423
 msgid "Logout All Sessions"
 msgstr ""
 
@@ -635,7 +662,7 @@ msgstr ""
 
 #: includes/Admin/views/tools.php:183
 #: assets/build/admin.js:3
-#: assets/src/admin.js:627
+#: assets/src/admin.js:639
 msgid "Import Settings"
 msgstr ""
 
@@ -724,243 +751,243 @@ msgstr ""
 msgid "Logout all other sessions"
 msgstr ""
 
-#: session-limiter.php:127
-msgid "Session Limiter (Free) was automatically deactivated because Session Limiter Pro is active. Only one Session Limiter edition can be active at a time."
+#: session-limiter.php:128
+msgid "Session Limiter Pro was automatically deactivated to prevent conflicts. Only one Session Limiter edition can be active at a time."
 msgstr ""
 
 #: assets/build/admin.js:1
-#: assets/src/admin.js:299
+#: assets/src/admin.js:311
 msgid "Sessions:"
 msgstr ""
 
 #: assets/build/admin.js:1
-#: assets/src/admin.js:263
+#: assets/src/admin.js:275
 msgid "No users found"
 msgstr ""
 
 #. translators: %s: username
 #: assets/build/admin.js:2
-#: assets/src/admin.js:366
+#: assets/src/admin.js:378
+#, js-format
 msgid "Are you sure you want to terminate all sessions for %s? They will be logged out immediately."
 msgstr ""
 
-#. translators: %s: username
 #: assets/build/admin.js:2
-#: assets/src/admin.js:388
-#: assets/src/admin.js:430
-#: assets/src/admin.js:476
+#: assets/src/admin.js:400
+#: assets/src/admin.js:442
+#: assets/src/admin.js:488
 msgid "An error occurred."
 msgstr ""
 
 #: assets/build/admin.js:2
-#: assets/src/admin.js:391
-#: assets/src/admin.js:433
-#: assets/src/admin.js:479
+#: assets/src/admin.js:403
+#: assets/src/admin.js:445
+#: assets/src/admin.js:491
 msgid "An error occurred while processing the request."
 msgstr ""
 
 #: assets/build/admin.js:2
-#: assets/src/admin.js:358
+#: assets/src/admin.js:370
 msgid "Please select a user first."
 msgstr ""
 
 #: assets/build/admin.js:2
-#: assets/src/admin.js:412
+#: assets/src/admin.js:424
 msgid "Are you sure you want to terminate all sessions for all users? This action cannot be undone. Your current session will be preserved."
 msgstr ""
 
 #: assets/build/admin.js:2
-#: assets/src/admin.js:453
+#: assets/src/admin.js:465
 msgid "Reset Plugin Settings"
 msgstr ""
 
 #: assets/build/admin.js:2
-#: assets/src/admin.js:454
+#: assets/src/admin.js:466
 msgid "Are you sure you want to reset all plugin settings to their default values? This action cannot be undone."
 msgstr ""
 
 #: assets/build/admin.js:2
-#: assets/src/admin.js:500
+#: assets/src/admin.js:512
 msgid "Exporting..."
 msgstr ""
 
 #: assets/build/admin.js:2
-#: assets/src/admin.js:528
+#: assets/src/admin.js:540
 msgid "Settings exported successfully."
 msgstr ""
 
 #: assets/build/admin.js:2
-#: assets/src/admin.js:530
+#: assets/src/admin.js:542
 msgid "Export failed."
 msgstr ""
 
 #: assets/build/admin.js:2
-#: assets/src/admin.js:533
+#: assets/src/admin.js:545
 msgid "An error occurred while exporting settings."
 msgstr ""
 
 #: assets/build/admin.js:2
-#: assets/src/admin.js:569
+#: assets/src/admin.js:581
 msgid "Please select a valid JSON file."
 msgstr ""
 
 #. translators: %1$s: filename, %2$s: date
 #: assets/build/admin.js:3
-#: assets/src/admin.js:594
+#: assets/src/admin.js:606
+#, js-format
 msgid "Selected: %1$s (exported: %2$s)"
 msgstr ""
 
-#. translators: %1$s: filename, %2$s: date
 #: assets/build/admin.js:3
-#: assets/src/admin.js:596
+#: assets/src/admin.js:608
 msgid "Unknown"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:601
+#: assets/src/admin.js:613
 msgid "Invalid settings file. Please select a valid Session Limiter PRO export file."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:610
+#: assets/src/admin.js:622
 msgid "Error reading file."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:628
+#: assets/src/admin.js:640
 msgid "Are you sure you want to import these settings? This will overwrite your current settings and cannot be undone."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:632
+#: assets/src/admin.js:644
 msgid "Importing..."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:654
+#: assets/src/admin.js:666
 msgid "Import failed."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:659
+#: assets/src/admin.js:671
 msgid "An error occurred while importing settings."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:622
+#: assets/src/admin.js:634
 msgid "Please select a file first."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:956
+#: assets/src/admin.js:968
 msgid "License Key Not Found"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:957
+#: assets/src/admin.js:969
 msgid "License Expired"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:958
+#: assets/src/admin.js:970
 msgid "Activation Limit Reached"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:959
+#: assets/src/admin.js:971
 msgid "Invalid License"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:960
+#: assets/src/admin.js:972
 msgid "Domain Not Registered"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:969
+#: assets/src/admin.js:981
 msgid "Please enter your license key to activate the plugin."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:971
+#: assets/src/admin.js:983
 msgid "License Key Required"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:978
+#: assets/src/admin.js:990
 msgid "Activating..."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:997
+#: assets/src/admin.js:1009
 msgid "License Activated"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1002
+#: assets/src/admin.js:1014
 msgid "Activation failed. Please check your license key and try again."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1004
+#: assets/src/admin.js:1016
 msgid "Activation Failed"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1009
-#: assets/src/admin.js:1019
+#: assets/src/admin.js:1021
+#: assets/src/admin.js:1031
 msgid "Activate License"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1013
+#: assets/src/admin.js:1025
 msgid "Could not connect to the license server. Please check your internet connection and try again."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1015
-#: assets/src/admin.js:1066
+#: assets/src/admin.js:1027
+#: assets/src/admin.js:1078
 msgid "Connection Error"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1027
-#: assets/src/admin.js:1060
-#: assets/src/admin.js:1070
+#: assets/src/admin.js:1039
+#: assets/src/admin.js:1072
+#: assets/src/admin.js:1082
 msgid "Deactivate License"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1028
+#: assets/src/admin.js:1040
 msgid "Are you sure you want to deactivate your license? You will no longer receive updates."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1031
+#: assets/src/admin.js:1043
 msgid "Deactivating..."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1049
+#: assets/src/admin.js:1061
 msgid "License Deactivated"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1055
+#: assets/src/admin.js:1067
 msgid "Deactivation failed. Please try again."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1057
+#: assets/src/admin.js:1069
 msgid "Deactivation Failed"
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:1064
+#: assets/src/admin.js:1076
 msgid "Could not connect to the license server. Please try again."
 msgstr ""
 
 #: assets/build/admin.js:3
-#: assets/src/admin.js:912
+#: assets/src/admin.js:924
 msgid "Dismiss notification"
 msgstr ""
