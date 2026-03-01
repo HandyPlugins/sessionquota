@@ -1,7 +1,7 @@
 /**
  * Admin JavaScript
  *
- * @package SessionLimiterPro
+ * @package SessionQuotaPro
  */
 
 import { __, sprintf } from '@wordpress/i18n';
@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
  * Initialize tab navigation with accessibility support
  */
 function initTabNavigation() {
-	const tabButtons = document.querySelectorAll('.session-limiter-tab-button');
-	const tabPanels = document.querySelectorAll('.session-limiter-tab-panel');
+	const tabButtons = document.querySelectorAll('.sessionquota-tab-button');
+	const tabPanels = document.querySelectorAll('.sessionquota-tab-panel');
 
 	if (!tabButtons.length || !tabPanels.length) {
 		return;
@@ -49,14 +49,14 @@ function initTabNavigation() {
 		// Update tab buttons
 		tabButtons.forEach(btn => {
 			const isActive = btn.dataset.tab === tabId;
-			btn.classList.toggle('session-limiter-tab-active', isActive);
+			btn.classList.toggle('sessionquota-tab-active', isActive);
 			btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
 			btn.setAttribute('tabindex', isActive ? '0' : '-1');
 		});
 
 		// Update tab panels
 		tabPanels.forEach(panel => {
-			const panelId = panel.id.replace('session-limiter-panel-', '');
+			const panelId = panel.id.replace('sessionquota-panel-', '');
 			const isActive = panelId === tabId;
 			panel.classList.toggle('hidden', !isActive);
 		});
@@ -133,18 +133,18 @@ function initTabNavigation() {
  * Disables non-strict modes when session limit is 0
  */
 function initEnforcementModeToggle() {
-	const enforcementModeInputs = document.querySelectorAll('input[name="session_limiter_settings[enforcement_mode]"]');
-	const sessionLimitInput = document.querySelector('input[name="session_limiter_settings[session_limit]"]');
+	const enforcementModeInputs = document.querySelectorAll('input[name="sessionquota_settings[enforcement_mode]"]');
+	const sessionLimitInput = document.querySelector('input[name="sessionquota_settings[session_limit]"]');
 	const sessionLimitRow = sessionLimitInput?.closest('tr');
 	const enforcementModeContainer = document.getElementById('enforcement-mode-container');
-	const blockModeOptions = document.getElementById('session-limiter-block-mode-options');
+	const blockModeOptions = document.getElementById('sessionquota-block-mode-options');
 
 	if (!enforcementModeInputs.length || !sessionLimitRow) {
 		return;
 	}
 
 	const toggleSessionLimitVisibility = () => {
-		const selectedMode = document.querySelector('input[name="session_limiter_settings[enforcement_mode]"]:checked')?.value;
+		const selectedMode = document.querySelector('input[name="sessionquota_settings[enforcement_mode]"]:checked')?.value;
 		
 		if (selectedMode === 'logout_all_others') {
 			sessionLimitRow.style.display = 'none';
@@ -158,13 +158,13 @@ function initEnforcementModeToggle() {
 			return;
 		}
 
-		const selectedMode = document.querySelector('input[name="session_limiter_settings[enforcement_mode]"]:checked')?.value;
+		const selectedMode = document.querySelector('input[name="sessionquota_settings[enforcement_mode]"]:checked')?.value;
 		blockModeOptions.classList.toggle('hidden', selectedMode !== 'block');
 	};
 
 	const toggleEnforcementModeState = () => {
 		const limitValue = parseInt(sessionLimitInput?.value, 10) || 0;
-		const selectedMode = document.querySelector('input[name="session_limiter_settings[enforcement_mode]"]:checked')?.value;
+		const selectedMode = document.querySelector('input[name="sessionquota_settings[enforcement_mode]"]:checked')?.value;
 		const isStrictMode = selectedMode === 'logout_all_others';
 		const disableByLimit = limitValue === 0 && !isStrictMode;
 
@@ -190,7 +190,7 @@ function initEnforcementModeToggle() {
 				hintElement.id = 'enforcement-disabled-hint';
 				hintElement.className = 'mt-3 text-sm text-amber-600';
 				hintElement.innerHTML = '<span class="dashicons dashicons-info" style="font-size: 16px; width: 16px; height: 16px; margin-right: 4px;"></span>' +
-					(window.sessionLimiter?.i18n?.enforcementHint || window.sessionLimiterPro?.i18n?.enforcementHint || 'Set the session limit to 1 or higher to enable block and logout-oldest modes. Strict mode remains available.');
+					(window.SessionQuota?.i18n?.enforcementHint || window.SessionQuotaPro?.i18n?.enforcementHint || 'Set the session limit to 1 or higher to enable block and logout-oldest modes. Strict mode remains available.');
 				enforcementModeContainer.parentNode.insertBefore(hintElement, enforcementModeContainer.nextSibling);
 			}
 		} else if (hintElement) {
@@ -238,10 +238,10 @@ function debounce(func, wait) {
  * Initialize user search functionality
  */
 function initUserSearch() {
-	const searchInput = document.getElementById('session-limiter-user-search');
-	const resultsContainer = document.getElementById('session-limiter-user-search-results');
-	const selectedUserContainer = document.getElementById('session-limiter-selected-user');
-	const clearSelectionBtn = document.getElementById('session-limiter-clear-selection');
+	const searchInput = document.getElementById('sessionquota-user-search');
+	const resultsContainer = document.getElementById('sessionquota-user-search-results');
+	const selectedUserContainer = document.getElementById('sessionquota-selected-user');
+	const clearSelectionBtn = document.getElementById('sessionquota-clear-selection');
 
 	if (!searchInput || !resultsContainer) {
 		return;
@@ -256,11 +256,11 @@ function initUserSearch() {
 
 		try {
 			const formData = new FormData();
-			formData.append('action', 'session_limiter_search_users');
-			formData.append('nonce', window.sessionLimiterPro.nonce);
+			formData.append('action', 'sessionquota_search_users');
+			formData.append('nonce', window.SessionQuotaPro.nonce);
 			formData.append('search', searchTerm);
 
-			const response = await fetch(window.sessionLimiterPro.ajaxUrl, {
+			const response = await fetch(window.SessionQuotaPro.ajaxUrl, {
 				method: 'POST',
 				body: formData,
 			});
@@ -272,7 +272,7 @@ function initUserSearch() {
 				resultsContainer.classList.remove('hidden');
 				searchInput.setAttribute('aria-expanded', 'true');
 			} else {
-				resultsContainer.innerHTML = `<div class="p-3 text-sm text-gray-500" role="status">${__('No users found', 'session-limiter')}</div>`;
+				resultsContainer.innerHTML = `<div class="p-3 text-sm text-gray-500" role="status">${__('No users found', 'sessionquota')}</div>`;
 				resultsContainer.classList.remove('hidden');
 				searchInput.setAttribute('aria-expanded', 'true');
 			}
@@ -298,7 +298,7 @@ function initUserSearch() {
 		clearSelectionBtn.addEventListener('click', () => {
 			selectedUserContainer.classList.add('hidden');
 			searchInput.value = '';
-			document.getElementById('session-limiter-selected-user-id').value = '';
+			document.getElementById('sessionquota-selected-user-id').value = '';
 		});
 	}
 }
@@ -307,13 +307,13 @@ function initUserSearch() {
  * Render search results
  */
 function renderSearchResults(users) {
-	const resultsContainer = document.getElementById('session-limiter-user-search-results');
-	const sessionsLabel = __('Sessions:', 'session-limiter');
+	const resultsContainer = document.getElementById('sessionquota-user-search-results');
+	const sessionsLabel = __('Sessions:', 'sessionquota');
 
 	resultsContainer.innerHTML = users.map((user, index) => `
-		<div class="session-limiter-user-result p-3 hover:bg-gray-100 cursor-pointer border-b last:border-b-0"
+		<div class="sessionquota-user-result p-3 hover:bg-gray-100 cursor-pointer border-b last:border-b-0"
 			 role="option"
-			 id="session-limiter-user-result-${user.id}"
+			 id="sessionquota-user-result-${user.id}"
 			 aria-selected="false"
 			 tabindex="-1"
 			 data-user-id="${user.id}"
@@ -328,7 +328,7 @@ function renderSearchResults(users) {
 	`).join('');
 
 	// Add click handlers to results
-	resultsContainer.querySelectorAll('.session-limiter-user-result').forEach(result => {
+	resultsContainer.querySelectorAll('.sessionquota-user-result').forEach(result => {
 		result.addEventListener('click', () => selectUser(result.dataset));
 	});
 }
@@ -337,14 +337,14 @@ function renderSearchResults(users) {
  * Select a user
  */
 function selectUser(userData) {
-	const searchInput = document.getElementById('session-limiter-user-search');
-	const resultsContainer = document.getElementById('session-limiter-user-search-results');
-	const selectedUserContainer = document.getElementById('session-limiter-selected-user');
+	const searchInput = document.getElementById('sessionquota-user-search');
+	const resultsContainer = document.getElementById('sessionquota-user-search-results');
+	const selectedUserContainer = document.getElementById('sessionquota-selected-user');
 
-	document.getElementById('session-limiter-selected-user-id').value = userData.userId;
-	document.getElementById('session-limiter-selected-user-name').textContent = `${userData.userName} (${userData.userLogin})`;
-	document.getElementById('session-limiter-selected-user-email').textContent = userData.userEmail;
-	document.getElementById('session-limiter-selected-user-sessions').textContent = userData.userSessions;
+	document.getElementById('sessionquota-selected-user-id').value = userData.userId;
+	document.getElementById('sessionquota-selected-user-name').textContent = `${userData.userName} (${userData.userLogin})`;
+	document.getElementById('sessionquota-selected-user-email').textContent = userData.userEmail;
+	document.getElementById('sessionquota-selected-user-sessions').textContent = userData.userSessions;
 
 	selectedUserContainer.classList.remove('hidden');
 	resultsContainer.classList.add('hidden');
@@ -356,36 +356,36 @@ function selectUser(userData) {
  * Initialize force logout functionality
  */
 function initForceLogout() {
-	const forceLogoutBtn = document.getElementById('session-limiter-force-logout-btn');
+	const forceLogoutBtn = document.getElementById('sessionquota-force-logout-btn');
 
 	if (!forceLogoutBtn) {
 		return;
 	}
 
 	forceLogoutBtn.addEventListener('click', () => {
-		const userId = document.getElementById('session-limiter-selected-user-id').value;
-		const userName = document.getElementById('session-limiter-selected-user-name').textContent;
+		const userId = document.getElementById('sessionquota-selected-user-id').value;
+		const userName = document.getElementById('sessionquota-selected-user-name').textContent;
 
 		if (!userId) {
-			showToast(__('Please select a user first.', 'session-limiter'), 'error');
+			showToast(__('Please select a user first.', 'sessionquota'), 'error');
 			return;
 		}
 
 		showModal(
-			__('Force Logout User', 'session-limiter'),
+			__('Force Logout User', 'sessionquota'),
 			sprintf(
 				/* translators: %s: username */
-				__('Are you sure you want to terminate all sessions for %s? They will be logged out immediately.', 'session-limiter'),
+				__('Are you sure you want to terminate all sessions for %s? They will be logged out immediately.', 'sessionquota'),
 				userName
 			),
 			async () => {
 				try {
 					const formData = new FormData();
-					formData.append('action', 'session_limiter_force_logout_user');
-					formData.append('nonce', window.sessionLimiterPro.nonce);
+					formData.append('action', 'sessionquota_force_logout_user');
+					formData.append('nonce', window.SessionQuotaPro.nonce);
 					formData.append('user_id', userId);
 
-					const response = await fetch(window.sessionLimiterPro.ajaxUrl, {
+					const response = await fetch(window.SessionQuotaPro.ajaxUrl, {
 						method: 'POST',
 						body: formData,
 					});
@@ -395,12 +395,12 @@ function initForceLogout() {
 					if (data.success) {
 						showToast(data.data.message, 'success');
 						// Update session count
-						document.getElementById('session-limiter-selected-user-sessions').textContent = '0';
+						document.getElementById('sessionquota-selected-user-sessions').textContent = '0';
 					} else {
-						showToast(data.data.message || __('An error occurred.', 'session-limiter'), 'error');
+						showToast(data.data.message || __('An error occurred.', 'sessionquota'), 'error');
 					}
 				} catch (error) {
-					showToast(__('An error occurred while processing the request.', 'session-limiter'), 'error');
+					showToast(__('An error occurred while processing the request.', 'sessionquota'), 'error');
 					console.error('Force logout error:', error);
 				}
 			}
@@ -412,7 +412,7 @@ function initForceLogout() {
  * Initialize logout all sessions functionality
  */
 function initLogoutAllSessions() {
-	const logoutAllBtn = document.getElementById('session-limiter-logout-all-btn');
+	const logoutAllBtn = document.getElementById('sessionquota-logout-all-btn');
 
 	if (!logoutAllBtn) {
 		return;
@@ -420,16 +420,16 @@ function initLogoutAllSessions() {
 
 	logoutAllBtn.addEventListener('click', () => {
 		showModal(
-			__('Logout All Sessions', 'session-limiter'),
-			__('Are you sure you want to terminate all sessions for all users? This action cannot be undone. Your current session will be preserved.', 'session-limiter'),
+			__('Logout All Sessions', 'sessionquota'),
+			__('Are you sure you want to terminate all sessions for all users? This action cannot be undone. Your current session will be preserved.', 'sessionquota'),
 			async () => {
 				try {
 					const formData = new FormData();
-					formData.append('action', 'session_limiter_logout_all_sessions');
-					formData.append('nonce', window.sessionLimiterPro.nonce);
+					formData.append('action', 'sessionquota_logout_all_sessions');
+					formData.append('nonce', window.SessionQuotaPro.nonce);
 					formData.append('confirm', 'confirm');
 
-					const response = await fetch(window.sessionLimiterPro.ajaxUrl, {
+					const response = await fetch(window.SessionQuotaPro.ajaxUrl, {
 						method: 'POST',
 						body: formData,
 					});
@@ -439,10 +439,10 @@ function initLogoutAllSessions() {
 					if (data.success) {
 						showToast(data.data.message, 'success');
 					} else {
-						showToast(data.data.message || __('An error occurred.', 'session-limiter'), 'error');
+						showToast(data.data.message || __('An error occurred.', 'sessionquota'), 'error');
 					}
 				} catch (error) {
-					showToast(__('An error occurred while processing the request.', 'session-limiter'), 'error');
+					showToast(__('An error occurred while processing the request.', 'sessionquota'), 'error');
 					console.error('Logout all error:', error);
 				}
 			}
@@ -454,7 +454,7 @@ function initLogoutAllSessions() {
  * Initialize reset settings functionality
  */
 function initResetSettings() {
-	const resetBtn = document.getElementById('session-limiter-reset-data-btn');
+	const resetBtn = document.getElementById('sessionquota-reset-data-btn');
 
 	if (!resetBtn) {
 		return;
@@ -462,16 +462,16 @@ function initResetSettings() {
 
 	resetBtn.addEventListener('click', () => {
 		showModal(
-			__('Reset Plugin Settings', 'session-limiter'),
-			__('Are you sure you want to reset all plugin settings to their default values? This action cannot be undone.', 'session-limiter'),
+			__('Reset Plugin Settings', 'sessionquota'),
+			__('Are you sure you want to reset all plugin settings to their default values? This action cannot be undone.', 'sessionquota'),
 			async () => {
 				try {
 					const formData = new FormData();
-					formData.append('action', 'session_limiter_reset_plugin_data');
-					formData.append('nonce', window.sessionLimiterPro.nonce);
+					formData.append('action', 'sessionquota_reset_plugin_data');
+					formData.append('nonce', window.SessionQuotaPro.nonce);
 					formData.append('confirm', 'confirm');
 
-					const response = await fetch(window.sessionLimiterPro.ajaxUrl, {
+					const response = await fetch(window.SessionQuotaPro.ajaxUrl, {
 						method: 'POST',
 						body: formData,
 					});
@@ -482,13 +482,13 @@ function initResetSettings() {
 						showToast(data.data.message, 'success');
 						// Reload after a short delay
 						setTimeout(() => {
-							window.location.href = window.location.href.split('?')[0] + '?page=session-limiter';
+							window.location.href = window.location.href.split('?')[0] + '?page=sessionquota';
 						}, 1500);
 					} else {
-						showToast(data.data.message || __('An error occurred.', 'session-limiter'), 'error');
+						showToast(data.data.message || __('An error occurred.', 'sessionquota'), 'error');
 					}
 				} catch (error) {
-					showToast(__('An error occurred while processing the request.', 'session-limiter'), 'error');
+					showToast(__('An error occurred while processing the request.', 'sessionquota'), 'error');
 					console.error('Reset error:', error);
 				}
 			}
@@ -500,7 +500,7 @@ function initResetSettings() {
  * Initialize export settings functionality
  */
 function initExportSettings() {
-	const exportBtn = document.getElementById('session-limiter-export-settings-btn');
+	const exportBtn = document.getElementById('sessionquota-export-settings-btn');
 
 	if (!exportBtn) {
 		return;
@@ -509,14 +509,14 @@ function initExportSettings() {
 	exportBtn.addEventListener('click', async () => {
 		exportBtn.disabled = true;
 		const originalText = exportBtn.innerHTML;
-		exportBtn.innerHTML = `<svg class="animate-spin h-4 w-4 mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>${__('Exporting...', 'session-limiter')}`;
+		exportBtn.innerHTML = `<svg class="animate-spin h-4 w-4 mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>${__('Exporting...', 'sessionquota')}`;
 
 		try {
 			const formData = new FormData();
-			formData.append('action', 'session_limiter_export_settings');
-			formData.append('nonce', window.sessionLimiterPro.nonce);
+			formData.append('action', 'sessionquota_export_settings');
+			formData.append('nonce', window.SessionQuotaPro.nonce);
 
-			const response = await fetch(window.sessionLimiterPro.ajaxUrl, {
+			const response = await fetch(window.SessionQuotaPro.ajaxUrl, {
 				method: 'POST',
 				body: formData,
 			});
@@ -537,12 +537,12 @@ function initExportSettings() {
 				document.body.removeChild(a);
 				URL.revokeObjectURL(url);
 
-				showToast(__('Settings exported successfully.', 'session-limiter'), 'success');
+				showToast(__('Settings exported successfully.', 'sessionquota'), 'success');
 			} else {
-				showToast(data.data.message || __('Export failed.', 'session-limiter'), 'error');
+				showToast(data.data.message || __('Export failed.', 'sessionquota'), 'error');
 			}
 		} catch (error) {
-			showToast(__('An error occurred while exporting settings.', 'session-limiter'), 'error');
+			showToast(__('An error occurred while exporting settings.', 'sessionquota'), 'error');
 			console.error('Export error:', error);
 		} finally {
 			exportBtn.disabled = false;
@@ -555,9 +555,9 @@ function initExportSettings() {
  * Initialize import settings functionality
  */
 function initImportSettings() {
-	const importBtn = document.getElementById('session-limiter-import-settings-btn');
-	const fileInput = document.getElementById('session-limiter-import-file');
-	const fileNameDisplay = document.getElementById('session-limiter-import-file-name');
+	const importBtn = document.getElementById('sessionquota-import-settings-btn');
+	const fileInput = document.getElementById('sessionquota-import-file');
+	const fileNameDisplay = document.getElementById('sessionquota-import-file-name');
 
 	if (!importBtn || !fileInput) {
 		return;
@@ -578,7 +578,7 @@ function initImportSettings() {
 
 		// Validate file type
 		if (file.type !== 'application/json' && !file.name.endsWith('.json')) {
-			showToast(__('Please select a valid JSON file.', 'session-limiter'), 'error');
+			showToast(__('Please select a valid JSON file.', 'sessionquota'), 'error');
 			fileInput.value = '';
 			importBtn.disabled = true;
 			fileNameDisplay?.classList.add('hidden');
@@ -593,7 +593,7 @@ function initImportSettings() {
 				// Validate JSON structure
 				const jsonData = JSON.parse(event.target.result);
 				
-				if (!jsonData.plugin || jsonData.plugin !== 'session-limiter') {
+				if (!jsonData.plugin || jsonData.plugin !== 'sessionquota') {
 					throw new Error('Invalid plugin identifier');
 				}
 
@@ -603,14 +603,14 @@ function initImportSettings() {
 				if (fileNameDisplay) {
 					fileNameDisplay.textContent = sprintf(
 						/* translators: %1$s: filename, %2$s: date */
-						__('Selected: %1$s (exported: %2$s)', 'session-limiter'),
+						__('Selected: %1$s (exported: %2$s)', 'sessionquota'),
 						file.name,
-						jsonData.exported || __('Unknown', 'session-limiter')
+						jsonData.exported || __('Unknown', 'sessionquota')
 					);
 					fileNameDisplay.classList.remove('hidden');
 				}
 			} catch (error) {
-				showToast(__('Invalid settings file. Please select a valid Session Limiter PRO export file.', 'session-limiter'), 'error');
+				showToast(__('Invalid settings file. Please select a valid SessionQuota PRO export file.', 'sessionquota'), 'error');
 				fileInput.value = '';
 				importBtn.disabled = true;
 				fileNameDisplay?.classList.add('hidden');
@@ -619,7 +619,7 @@ function initImportSettings() {
 		};
 
 		reader.onerror = () => {
-			showToast(__('Error reading file.', 'session-limiter'), 'error');
+			showToast(__('Error reading file.', 'sessionquota'), 'error');
 			fileInput.value = '';
 			importBtn.disabled = true;
 			selectedFileContent = null;
@@ -631,25 +631,25 @@ function initImportSettings() {
 	// Handle import
 	importBtn.addEventListener('click', () => {
 		if (!selectedFileContent) {
-			showToast(__('Please select a file first.', 'session-limiter'), 'error');
+			showToast(__('Please select a file first.', 'sessionquota'), 'error');
 			return;
 		}
 
 		showModal(
-			__('Import Settings', 'session-limiter'),
-			__('Are you sure you want to import these settings? This will overwrite your current settings and cannot be undone.', 'session-limiter'),
+			__('Import Settings', 'sessionquota'),
+			__('Are you sure you want to import these settings? This will overwrite your current settings and cannot be undone.', 'sessionquota'),
 			async () => {
 				importBtn.disabled = true;
 				const originalText = importBtn.innerHTML;
-				importBtn.innerHTML = `<svg class="animate-spin h-4 w-4 mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>${__('Importing...', 'session-limiter')}`;
+				importBtn.innerHTML = `<svg class="animate-spin h-4 w-4 mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>${__('Importing...', 'sessionquota')}`;
 
 				try {
 					const formData = new FormData();
-					formData.append('action', 'session_limiter_import_settings');
-					formData.append('nonce', window.sessionLimiterPro.nonce);
+					formData.append('action', 'sessionquota_import_settings');
+					formData.append('nonce', window.SessionQuotaPro.nonce);
 					formData.append('import_data', selectedFileContent);
 
-					const response = await fetch(window.sessionLimiterPro.ajaxUrl, {
+					const response = await fetch(window.SessionQuotaPro.ajaxUrl, {
 						method: 'POST',
 						body: formData,
 					});
@@ -660,15 +660,15 @@ function initImportSettings() {
 						showToast(data.data.message, 'success');
 						// Reload after a short delay
 						setTimeout(() => {
-							window.location.href = window.location.href.split('?')[0] + '?page=session-limiter';
+							window.location.href = window.location.href.split('?')[0] + '?page=sessionquota';
 						}, 1500);
 					} else {
-						showToast(data.data.message || __('Import failed.', 'session-limiter'), 'error');
+						showToast(data.data.message || __('Import failed.', 'sessionquota'), 'error');
 						importBtn.disabled = false;
 						importBtn.innerHTML = originalText;
 					}
 				} catch (error) {
-					showToast(__('An error occurred while importing settings.', 'session-limiter'), 'error');
+					showToast(__('An error occurred while importing settings.', 'sessionquota'), 'error');
 					console.error('Import error:', error);
 					importBtn.disabled = false;
 					importBtn.innerHTML = originalText;
@@ -688,9 +688,9 @@ function initModal() {
 	// Use event delegation on document for modal buttons
 	// This ensures the handlers work even when elements are in hidden panels
 	document.addEventListener('click', (e) => {
-		const confirmBtn = e.target.closest('#session-limiter-modal-confirm');
-		const cancelBtn = e.target.closest('#session-limiter-modal-cancel');
-		const modal = document.getElementById('session-limiter-confirm-modal');
+		const confirmBtn = e.target.closest('#sessionquota-modal-confirm');
+		const cancelBtn = e.target.closest('#sessionquota-modal-cancel');
+		const modal = document.getElementById('sessionquota-confirm-modal');
 
 		if (confirmBtn && modal && !modal.classList.contains('hidden')) {
 			e.preventDefault();
@@ -720,7 +720,7 @@ function initModal() {
 
 	// Close on Escape key
 	document.addEventListener('keydown', (e) => {
-		const modal = document.getElementById('session-limiter-confirm-modal');
+		const modal = document.getElementById('sessionquota-confirm-modal');
 		if (!modal || modal.classList.contains('hidden')) {
 			return;
 		}
@@ -749,9 +749,9 @@ function initModal() {
 }
 
 function showModal(title, message, callback) {
-	const modal = document.getElementById('session-limiter-confirm-modal');
-	const titleEl = document.getElementById('session-limiter-modal-title');
-	const messageEl = document.getElementById('session-limiter-modal-message');
+	const modal = document.getElementById('sessionquota-confirm-modal');
+	const titleEl = document.getElementById('sessionquota-modal-title');
+	const messageEl = document.getElementById('sessionquota-modal-message');
 
 	if (!modal) {
 		// Fallback to custom confirm dialog instead of native
@@ -774,12 +774,12 @@ function showModal(title, message, callback) {
 	document.body.style.overflow = 'hidden';
 
 	// Focus the cancel button (safer default)
-	const cancelBtn = document.getElementById('session-limiter-modal-cancel');
+	const cancelBtn = document.getElementById('sessionquota-modal-cancel');
 	setTimeout(() => cancelBtn?.focus(), 50);
 }
 
 function hideModal() {
-	const modal = document.getElementById('session-limiter-confirm-modal');
+	const modal = document.getElementById('sessionquota-confirm-modal');
 	modal?.classList.add('hidden');
 	modal?.setAttribute('aria-hidden', 'true');
 	document.body.style.overflow = '';
@@ -800,16 +800,16 @@ let toastTimeout = null;
 function initToast() {
 	// Use event delegation for toast close button
 	document.addEventListener('click', (e) => {
-		if (e.target.closest('#session-limiter-toast-close')) {
+		if (e.target.closest('#sessionquota-toast-close')) {
 			hideToast();
 		}
 	});
 }
 
 function showToast(message, type = 'info') {
-	const toast = document.getElementById('session-limiter-toast');
-	const messageEl = document.getElementById('session-limiter-toast-message');
-	const iconEl = document.getElementById('session-limiter-toast-icon');
+	const toast = document.getElementById('sessionquota-toast');
+	const messageEl = document.getElementById('sessionquota-toast-message');
+	const iconEl = document.getElementById('sessionquota-toast-icon');
 
 	if (!toast) {
 		// Fallback: Create an inline notification if toast element doesn't exist
@@ -864,7 +864,7 @@ function showToast(message, type = 'info') {
 }
 
 function hideToast() {
-	const toast = document.getElementById('session-limiter-toast');
+	const toast = document.getElementById('sessionquota-toast');
 	toast?.classList.add('hidden');
 	if (toastTimeout) {
 		clearTimeout(toastTimeout);
@@ -878,20 +878,20 @@ function hideToast() {
  */
 function showInlineNotification(message, type = 'info', options = {}) {
 	const { 
-		container = document.querySelector('.session-limiter-pro-settings .max-w-5xl'),
+		container = document.querySelector('.sessionquota-pro-settings .max-w-5xl'),
 		persistent = false,
 		title = ''
 	} = options;
 
 	if (!container) {
 		// Ultimate fallback - never use native alert
-		console.warn(`[Session Limiter PRO] ${type}: ${message}`);
+		console.warn(`[SessionQuota PRO] ${type}: ${message}`);
 		return;
 	}
 
 	// Create notification element
 	const notification = document.createElement('div');
-	notification.className = `session-limiter-notification session-limiter-notification-${type}`;
+	notification.className = `sessionquota-notification sessionquota-notification-${type}`;
 	notification.setAttribute('role', 'alert');
 	notification.setAttribute('aria-live', 'polite');
 
@@ -911,17 +911,17 @@ function showInlineNotification(message, type = 'info', options = {}) {
 		</svg>`
 	};
 
-	const titleHtml = title ? `<p class="session-limiter-notification-title">${title}</p>` : '';
+	const titleHtml = title ? `<p class="sessionquota-notification-title">${title}</p>` : '';
 
 	notification.innerHTML = `
-		<div class="session-limiter-notification-icon">
+		<div class="sessionquota-notification-icon">
 			${icons[type] || icons.info}
 		</div>
-		<div class="session-limiter-notification-content">
+		<div class="sessionquota-notification-content">
 			${titleHtml}
-			<p class="session-limiter-notification-message">${message}</p>
+			<p class="sessionquota-notification-message">${message}</p>
 		</div>
-		<button type="button" class="session-limiter-notification-dismiss" aria-label="${__('Dismiss notification', 'session-limiter')}">
+		<button type="button" class="sessionquota-notification-dismiss" aria-label="${__('Dismiss notification', 'sessionquota')}">
 			<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
 				<path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
 			</svg>
@@ -929,7 +929,7 @@ function showInlineNotification(message, type = 'info', options = {}) {
 	`;
 
 	// Insert at top of container
-	const tabsContainer = container.querySelector('.session-limiter-tabs-container');
+	const tabsContainer = container.querySelector('.sessionquota-tabs-container');
 	if (tabsContainer) {
 		tabsContainer.parentNode.insertBefore(notification, tabsContainer);
 	} else {
@@ -937,7 +937,7 @@ function showInlineNotification(message, type = 'info', options = {}) {
 	}
 
 	// Setup dismiss button
-	const dismissBtn = notification.querySelector('.session-limiter-notification-dismiss');
+	const dismissBtn = notification.querySelector('.sessionquota-notification-dismiss');
 	dismissBtn?.addEventListener('click', () => {
 		notification.remove();
 	});
@@ -959,17 +959,17 @@ function showInlineNotification(message, type = 'info', options = {}) {
  * Initialize license activation functionality
  */
 function initLicenseActivation() {
-	const activateBtn = document.getElementById('session-limiter-activate-license');
-	const deactivateBtn = document.getElementById('session-limiter-deactivate-license');
-	const licenseInput = document.getElementById('session-limiter-license-key');
+	const activateBtn = document.getElementById('sessionquota-activate-license');
+	const deactivateBtn = document.getElementById('sessionquota-deactivate-license');
+	const licenseInput = document.getElementById('sessionquota-license-key');
 
 	// License error messages mapping for better user feedback
 	const licenseErrorTitles = {
-		'missing_license_key': __('License Key Not Found', 'session-limiter'),
-		'expired_license_key': __('License Expired', 'session-limiter'),
-		'can_not_add_new_domain': __('Activation Limit Reached', 'session-limiter'),
-		'invalid_license_or_domain': __('Invalid License', 'session-limiter'),
-		'unregistered_license_domain': __('Domain Not Registered', 'session-limiter'),
+		'missing_license_key': __('License Key Not Found', 'sessionquota'),
+		'expired_license_key': __('License Expired', 'sessionquota'),
+		'can_not_add_new_domain': __('Activation Limit Reached', 'sessionquota'),
+		'invalid_license_or_domain': __('Invalid License', 'sessionquota'),
+		'unregistered_license_domain': __('Domain Not Registered', 'sessionquota'),
 	};
 
 	if (activateBtn) {
@@ -978,24 +978,24 @@ function initLicenseActivation() {
 
 			if (!licenseKey) {
 				showInlineNotification(
-					__('Please enter your license key to activate the plugin.', 'session-limiter'),
+					__('Please enter your license key to activate the plugin.', 'sessionquota'),
 					'warning',
-					{ title: __('License Key Required', 'session-limiter') }
+					{ title: __('License Key Required', 'sessionquota') }
 				);
 				licenseInput?.focus();
 				return;
 			}
 
 			activateBtn.disabled = true;
-			activateBtn.textContent = __('Activating...', 'session-limiter');
+			activateBtn.textContent = __('Activating...', 'sessionquota');
 
 			try {
 				const formData = new FormData();
-				formData.append('action', 'session_limiter_activate_license');
-				formData.append('nonce', window.sessionLimiterPro.nonce);
+				formData.append('action', 'sessionquota_activate_license');
+				formData.append('nonce', window.SessionQuotaPro.nonce);
 				formData.append('license_key', licenseKey);
 
-				const response = await fetch(window.sessionLimiterPro.ajaxUrl, {
+				const response = await fetch(window.SessionQuotaPro.ajaxUrl, {
 					method: 'POST',
 					body: formData,
 				});
@@ -1006,29 +1006,29 @@ function initLicenseActivation() {
 					showInlineNotification(
 						data.data.message,
 						'success',
-						{ title: __('License Activated', 'session-limiter') }
+						{ title: __('License Activated', 'sessionquota') }
 					);
 					// Reload to show updated license status
 					setTimeout(() => window.location.reload(), 1500);
 				} else {
-					const errorMessage = data.data.message || __('Activation failed. Please check your license key and try again.', 'session-limiter');
+					const errorMessage = data.data.message || __('Activation failed. Please check your license key and try again.', 'sessionquota');
 					const errorCode = data.data.error_code || '';
-					const errorTitle = licenseErrorTitles[errorCode] || __('Activation Failed', 'session-limiter');
+					const errorTitle = licenseErrorTitles[errorCode] || __('Activation Failed', 'sessionquota');
 
 					showInlineNotification(errorMessage, 'error', { title: errorTitle });
 					
 					activateBtn.disabled = false;
-					activateBtn.textContent = __('Activate License', 'session-limiter');
+					activateBtn.textContent = __('Activate License', 'sessionquota');
 				}
 			} catch (error) {
 				showInlineNotification(
-					__('Could not connect to the license server. Please check your internet connection and try again.', 'session-limiter'),
+					__('Could not connect to the license server. Please check your internet connection and try again.', 'sessionquota'),
 					'error',
-					{ title: __('Connection Error', 'session-limiter') }
+					{ title: __('Connection Error', 'sessionquota') }
 				);
 				console.error('License activation error:', error);
 				activateBtn.disabled = false;
-				activateBtn.textContent = __('Activate License', 'session-limiter');
+				activateBtn.textContent = __('Activate License', 'sessionquota');
 			}
 		});
 	}
@@ -1036,18 +1036,18 @@ function initLicenseActivation() {
 	if (deactivateBtn) {
 		deactivateBtn.addEventListener('click', () => {
 			showModal(
-				__('Deactivate License', 'session-limiter'),
-				__('Are you sure you want to deactivate your license? You will no longer receive updates.', 'session-limiter'),
+				__('Deactivate License', 'sessionquota'),
+				__('Are you sure you want to deactivate your license? You will no longer receive updates.', 'sessionquota'),
 				async () => {
 					deactivateBtn.disabled = true;
-					deactivateBtn.textContent = __('Deactivating...', 'session-limiter');
+					deactivateBtn.textContent = __('Deactivating...', 'sessionquota');
 
 					try {
 						const formData = new FormData();
-						formData.append('action', 'session_limiter_deactivate_license');
-						formData.append('nonce', window.sessionLimiterPro.nonce);
+						formData.append('action', 'sessionquota_deactivate_license');
+						formData.append('nonce', window.SessionQuotaPro.nonce);
 
-						const response = await fetch(window.sessionLimiterPro.ajaxUrl, {
+						const response = await fetch(window.SessionQuotaPro.ajaxUrl, {
 							method: 'POST',
 							body: formData,
 						});
@@ -1058,28 +1058,28 @@ function initLicenseActivation() {
 							showInlineNotification(
 								data.data.message,
 								'success',
-								{ title: __('License Deactivated', 'session-limiter') }
+								{ title: __('License Deactivated', 'sessionquota') }
 							);
 							// Reload to show updated license status
 							setTimeout(() => window.location.reload(), 1500);
 						} else {
 							showInlineNotification(
-								data.data.message || __('Deactivation failed. Please try again.', 'session-limiter'),
+								data.data.message || __('Deactivation failed. Please try again.', 'sessionquota'),
 								'error',
-								{ title: __('Deactivation Failed', 'session-limiter') }
+								{ title: __('Deactivation Failed', 'sessionquota') }
 							);
 							deactivateBtn.disabled = false;
-							deactivateBtn.textContent = __('Deactivate License', 'session-limiter');
+							deactivateBtn.textContent = __('Deactivate License', 'sessionquota');
 						}
 					} catch (error) {
 						showInlineNotification(
-							__('Could not connect to the license server. Please try again.', 'session-limiter'),
+							__('Could not connect to the license server. Please try again.', 'sessionquota'),
 							'error',
-							{ title: __('Connection Error', 'session-limiter') }
+							{ title: __('Connection Error', 'sessionquota') }
 						);
 						console.error('License deactivation error:', error);
 						deactivateBtn.disabled = false;
-						deactivateBtn.textContent = __('Deactivate License', 'session-limiter');
+						deactivateBtn.textContent = __('Deactivate License', 'sessionquota');
 					}
 				}
 			);

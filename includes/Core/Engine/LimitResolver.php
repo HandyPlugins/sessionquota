@@ -4,13 +4,13 @@
  *
  * Resolves the session limit for a user.
  *
- * @package SessionLimiter\Core
+ * @package SessionQuota\Core
  */
 
-namespace SessionLimiter\Core\Engine;
+namespace SessionQuota\Core\Engine;
 
-use SessionLimiter\Core\Contracts\Hooks;
-use SessionLimiter\Core\Settings\EngineSettings;
+use SessionQuota\Core\Contracts\Hooks;
+use SessionQuota\Core\Settings\EngineSettings;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -194,7 +194,7 @@ class LimitResolver {
 			return array(
 				'limit'  => 1,
 				'source' => 'strict',
-				'label'  => __( 'Strict Single Session', 'session-limiter' ),
+				'label'  => __( 'Strict Single Session', 'sessionquota' ),
 			);
 		}
 
@@ -203,7 +203,7 @@ class LimitResolver {
 			return array(
 				'limit'  => $user_limit,
 				'source' => 'user',
-				'label'  => __( 'User Override', 'session-limiter' ),
+				'label'  => __( 'User Override', 'sessionquota' ),
 			);
 		}
 
@@ -212,7 +212,7 @@ class LimitResolver {
 			return array(
 				'limit'  => $membership_limit,
 				'source' => 'membership',
-				'label'  => __( 'Membership Level', 'session-limiter' ),
+				'label'  => __( 'Membership Level', 'sessionquota' ),
 			);
 		}
 
@@ -221,14 +221,14 @@ class LimitResolver {
 			return array(
 				'limit'  => $role_limit,
 				'source' => 'role',
-				'label'  => __( 'User Role', 'session-limiter' ),
+				'label'  => __( 'User Role', 'sessionquota' ),
 			);
 		}
 
 		return array(
 			'limit'  => $this->get_global_limit(),
 			'source' => 'global',
-			'label'  => __( 'Global Default', 'session-limiter' ),
+			'label'  => __( 'Global Default', 'sessionquota' ),
 		);
 	}
 }

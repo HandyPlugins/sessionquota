@@ -4,13 +4,13 @@
  *
  * Applies enforcement strategies when session limit is exceeded.
  *
- * @package SessionLimiter\Core
+ * @package SessionQuota\Core
  */
 
-namespace SessionLimiter\Core\Engine;
+namespace SessionQuota\Core\Engine;
 
-use SessionLimiter\Core\Contracts\Hooks;
-use SessionLimiter\Core\Settings\EngineSettings;
+use SessionQuota\Core\Contracts\Hooks;
+use SessionQuota\Core\Settings\EngineSettings;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,12 +30,12 @@ class SessionEnforcer {
 	/**
 	 * One-time cookie name used to show a blocked-login notice on wp-login.php.
 	 */
-	const BLOCKED_LOGIN_NOTICE_COOKIE = 'session_limiter_login_blocked';
+	const BLOCKED_LOGIN_NOTICE_COOKIE = 'sessionquota_login_blocked';
 
 	/**
 	 * Cookie name used to identify the blocked user for one-click recovery email.
 	 */
-	const BLOCKED_LOGIN_RECOVERY_COOKIE = 'session_limiter_login_blocked_recovery';
+	const BLOCKED_LOGIN_RECOVERY_COOKIE = 'sessionquota_login_blocked_recovery';
 
 	/**
 	 * Lifetime in seconds for the blocked-login recovery cookie.
@@ -45,7 +45,7 @@ class SessionEnforcer {
 	/**
 	 * Global flag key used to mark blocked login state for current request.
 	 */
-	const BLOCKED_LOGIN_PROMPT_GLOBAL = 'session_limiter_blocked_login_prompt';
+	const BLOCKED_LOGIN_PROMPT_GLOBAL = 'sessionquota_blocked_login_prompt';
 
 	/**
 	 * Enforcement mode: Logout oldest session.
@@ -342,7 +342,7 @@ class SessionEnforcer {
 		if ( ! $errors->get_error_message( 'session_limit_exceeded' ) ) {
 			$errors->add(
 				'session_limit_exceeded',
-				__( 'Session limit exceeded. Please log out from another device first.', 'session-limiter' )
+				__( 'Session limit exceeded. Please log out from another device first.', 'sessionquota' )
 			);
 		}
 
@@ -370,7 +370,7 @@ class SessionEnforcer {
 
 		return new \WP_Error(
 			'session_limit_exceeded',
-			__( 'Session limit exceeded. Please log out from another device first.', 'session-limiter' )
+			__( 'Session limit exceeded. Please log out from another device first.', 'sessionquota' )
 		);
 	}
 
@@ -672,9 +672,9 @@ class SessionEnforcer {
 	 */
 	public static function get_enforcement_modes() {
 		return array(
-			self::MODE_BLOCK             => __( 'Block new login', 'session-limiter' ),
-			self::MODE_LOGOUT_OLDEST     => __( 'Logout oldest session', 'session-limiter' ),
-			self::MODE_LOGOUT_ALL_OTHERS => __( 'Logout all other sessions', 'session-limiter' ),
+			self::MODE_BLOCK             => __( 'Block new login', 'sessionquota' ),
+			self::MODE_LOGOUT_OLDEST     => __( 'Logout oldest session', 'sessionquota' ),
+			self::MODE_LOGOUT_ALL_OTHERS => __( 'Logout all other sessions', 'sessionquota' ),
 		);
 	}
 }

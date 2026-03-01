@@ -1,23 +1,23 @@
 <?php
 /**
- * Uninstall Session Limiter.
+ * Uninstall SessionQuota.
  *
- * @package SessionLimiter
+ * @package SessionQuota
  */
 
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-const SESSION_LIMITER_FREE_UNINSTALL_PRO_PLUGIN_FILE = WP_PLUGIN_DIR . '/session-limiter-pro/session-limiter-pro.php';
+const SESSIONQUOTA_FREE_UNINSTALL_PRO_PLUGIN_FILE = WP_PLUGIN_DIR . '/sessionquota-pro/sessionquota-pro.php';
 
 /**
  * Check whether PRO edition is still installed (active or inactive).
  *
  * @return bool
  */
-function session_limiter_free_uninstall_other_edition_exists() {
-	return file_exists( SESSION_LIMITER_FREE_UNINSTALL_PRO_PLUGIN_FILE );
+function sessionquota_free_uninstall_other_edition_exists() {
+	return file_exists( SESSIONQUOTA_FREE_UNINSTALL_PRO_PLUGIN_FILE );
 }
 
 /**
@@ -26,7 +26,7 @@ function session_limiter_free_uninstall_other_edition_exists() {
  * @param string $option_name Option name.
  * @return void
  */
-function session_limiter_free_uninstall_delete_option( $option_name ) {
+function sessionquota_free_uninstall_delete_option( $option_name ) {
 	if ( is_multisite() ) {
 		delete_site_option( $option_name );
 		return;
@@ -41,7 +41,7 @@ function session_limiter_free_uninstall_delete_option( $option_name ) {
  * @param string $transient_name Transient name.
  * @return void
  */
-function session_limiter_free_uninstall_delete_transient( $transient_name ) {
+function sessionquota_free_uninstall_delete_transient( $transient_name ) {
 	if ( is_multisite() ) {
 		delete_site_transient( $transient_name );
 		return;
@@ -55,19 +55,19 @@ function session_limiter_free_uninstall_delete_transient( $transient_name ) {
  *
  * @return void
  */
-function session_limiter_free_uninstall_delete_transient_patterns() {
+function sessionquota_free_uninstall_delete_transient_patterns() {
 	global $wpdb;
 
 	if ( is_multisite() ) {
 		$patterns = array(
-			'_site_transient_session_limiter_geoip_%',
-			'_site_transient_timeout_session_limiter_geoip_%',
-			'_site_transient_session_limiter_blocked_alert_%',
-			'_site_transient_timeout_session_limiter_blocked_alert_%',
-			'_site_transient_session_limiter_recovery_token_%',
-			'_site_transient_timeout_session_limiter_recovery_token_%',
-			'_site_transient_session_limiter_recovery_cooldown_%',
-			'_site_transient_timeout_session_limiter_recovery_cooldown_%',
+			'_site_transient_sessionquota_geoip_%',
+			'_site_transient_timeout_sessionquota_geoip_%',
+			'_site_transient_sessionquota_blocked_alert_%',
+			'_site_transient_timeout_sessionquota_blocked_alert_%',
+			'_site_transient_sessionquota_recovery_token_%',
+			'_site_transient_timeout_sessionquota_recovery_token_%',
+			'_site_transient_sessionquota_recovery_cooldown_%',
+			'_site_transient_timeout_sessionquota_recovery_cooldown_%',
 		);
 
 		foreach ( $patterns as $pattern ) {
@@ -84,14 +84,14 @@ function session_limiter_free_uninstall_delete_transient_patterns() {
 	}
 
 	$patterns = array(
-		'_transient_session_limiter_geoip_%',
-		'_transient_timeout_session_limiter_geoip_%',
-		'_transient_session_limiter_blocked_alert_%',
-		'_transient_timeout_session_limiter_blocked_alert_%',
-		'_transient_session_limiter_recovery_token_%',
-		'_transient_timeout_session_limiter_recovery_token_%',
-		'_transient_session_limiter_recovery_cooldown_%',
-		'_transient_timeout_session_limiter_recovery_cooldown_%',
+		'_transient_sessionquota_geoip_%',
+		'_transient_timeout_sessionquota_geoip_%',
+		'_transient_sessionquota_blocked_alert_%',
+		'_transient_timeout_sessionquota_blocked_alert_%',
+		'_transient_sessionquota_recovery_token_%',
+		'_transient_timeout_sessionquota_recovery_token_%',
+		'_transient_sessionquota_recovery_cooldown_%',
+		'_transient_timeout_sessionquota_recovery_cooldown_%',
 	);
 
 	foreach ( $patterns as $pattern ) {
@@ -110,13 +110,13 @@ function session_limiter_free_uninstall_delete_transient_patterns() {
  *
  * @return void
  */
-function session_limiter_free_uninstall_delete_user_meta() {
+function sessionquota_free_uninstall_delete_user_meta() {
 	global $wpdb;
 
 	$meta_keys = array(
-		'_session_limiter_limit',
-		'_session_limiter_last_country',
-		'_session_limiter_last_ip',
+		'_sessionquota_limit',
+		'_sessionquota_last_country',
+		'_sessionquota_last_ip',
 	);
 
 	foreach ( $meta_keys as $meta_key ) {
@@ -136,7 +136,7 @@ function session_limiter_free_uninstall_delete_user_meta() {
  * @param string $directory Directory path.
  * @return void
  */
-function session_limiter_free_uninstall_remove_directory( $directory ) {
+function sessionquota_free_uninstall_remove_directory( $directory ) {
 	$entries = scandir( $directory );
 	if ( ! is_array( $entries ) ) {
 		return;
@@ -150,7 +150,7 @@ function session_limiter_free_uninstall_remove_directory( $directory ) {
 		$path = $directory . DIRECTORY_SEPARATOR . $entry;
 
 		if ( is_dir( $path ) ) {
-			session_limiter_free_uninstall_remove_directory( $path );
+			sessionquota_free_uninstall_remove_directory( $path );
 			if ( is_dir( $path ) ) {
 				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir -- wp_delete_file() does not remove directories.
 				rmdir( $path );
@@ -170,11 +170,11 @@ function session_limiter_free_uninstall_remove_directory( $directory ) {
 }
 
 /**
- * Delete upload artifacts from uploads/session-limiter.
+ * Delete upload artifacts from uploads/sessionquota.
  *
  * @return void
  */
-function session_limiter_free_uninstall_cleanup_uploads() {
+function sessionquota_free_uninstall_cleanup_uploads() {
 	$switched = false;
 
 	if ( is_multisite() && function_exists( 'get_main_site_id' ) ) {
@@ -197,13 +197,13 @@ function session_limiter_free_uninstall_cleanup_uploads() {
 		return;
 	}
 
-	$plugin_upload_dir = trailingslashit( $uploads['basedir'] ) . 'session-limiter';
+	$plugin_upload_dir = trailingslashit( $uploads['basedir'] ) . 'sessionquota';
 
 	if ( ! is_dir( $plugin_upload_dir ) ) {
 		return;
 	}
 
-	session_limiter_free_uninstall_remove_directory( $plugin_upload_dir );
+	sessionquota_free_uninstall_remove_directory( $plugin_upload_dir );
 }
 
 /**
@@ -211,10 +211,10 @@ function session_limiter_free_uninstall_cleanup_uploads() {
  *
  * @return void
  */
-function session_limiter_free_uninstall_clear_scheduled_hooks() {
+function sessionquota_free_uninstall_clear_scheduled_hooks() {
 	$hooks = array(
-		'session_limiter_cleanup_logs',
-		'session_limiter_update_geoip_database',
+		'sessionquota_cleanup_logs',
+		'sessionquota_update_geoip_database',
 	);
 
 	$switched = false;
@@ -243,47 +243,47 @@ function session_limiter_free_uninstall_clear_scheduled_hooks() {
  *
  * @return void
  */
-function session_limiter_free_uninstall_full_cleanup() {
+function sessionquota_free_uninstall_full_cleanup() {
 	global $wpdb;
 
 	$option_names = array(
-		'session_limiter_settings',
-		'session_limiter_monitoring_settings',
-		'session_limiter_admin_alerts',
-		'session_limiter_maxmind_settings',
-		'session_limiter_license_key',
-		'session_limiter_db_version',
-		'session_limiter_delete_shared_settings_on_uninstall',
+		'sessionquota_settings',
+		'sessionquota_monitoring_settings',
+		'sessionquota_admin_alerts',
+		'sessionquota_maxmind_settings',
+		'sessionquota_license_key',
+		'sessionquota_db_version',
+		'sessionquota_delete_shared_settings_on_uninstall',
 	);
 
 	foreach ( $option_names as $option_name ) {
-		session_limiter_free_uninstall_delete_option( $option_name );
+		sessionquota_free_uninstall_delete_option( $option_name );
 	}
 
 	$transient_names = array(
-		'session_limiter_license_info',
-		'session_limiter_site_activation_notice',
+		'sessionquota_license_info',
+		'sessionquota_site_activation_notice',
 	);
 
 	foreach ( $transient_names as $transient_name ) {
-		session_limiter_free_uninstall_delete_transient( $transient_name );
+		sessionquota_free_uninstall_delete_transient( $transient_name );
 	}
 
-	session_limiter_free_uninstall_delete_transient_patterns();
-	session_limiter_free_uninstall_delete_user_meta();
+	sessionquota_free_uninstall_delete_transient_patterns();
+	sessionquota_free_uninstall_delete_user_meta();
 
-	session_limiter_free_uninstall_clear_scheduled_hooks();
+	sessionquota_free_uninstall_clear_scheduled_hooks();
 
-	$table_name         = ( is_multisite() ? $wpdb->base_prefix : $wpdb->prefix ) . 'session_limiter_security_logs';
+	$table_name         = ( is_multisite() ? $wpdb->base_prefix : $wpdb->prefix ) . 'sessionquota_security_logs';
 	$escaped_table_name = esc_sql( $table_name );
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Uninstall cleanup.
 	$wpdb->query( "DROP TABLE IF EXISTS `{$escaped_table_name}`" );
 
-	session_limiter_free_uninstall_cleanup_uploads();
+	sessionquota_free_uninstall_cleanup_uploads();
 }
 
-if ( session_limiter_free_uninstall_other_edition_exists() ) {
+if ( sessionquota_free_uninstall_other_edition_exists() ) {
 	return;
 }
 
-session_limiter_free_uninstall_full_cleanup();
+sessionquota_free_uninstall_full_cleanup();

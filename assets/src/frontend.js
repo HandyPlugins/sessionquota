@@ -1,5 +1,5 @@
 /**
- * Frontend JavaScript for Session Limiter 
+ * Frontend JavaScript for SessionQuota 
  */
 
 import './frontend.css';
@@ -7,7 +7,7 @@ import './frontend.css';
 (function($) {
 	'use strict';
 
-	const SessionLimiterFrontend = {
+	const SessionQuotaFrontend = {
 		/**
 		 * Initialize
 		 */
@@ -19,8 +19,8 @@ import './frontend.css';
 		 * Bind events
 		 */
 		bindEvents: function() {
-			$(document).on('click', '#session-limiter-logout-others-btn', this.handleLogoutOthers.bind(this));
-			$(document).on('click', '.session-limiter-destroy-session', this.handleDestroySession.bind(this));
+			$(document).on('click', '#sessionquota-logout-others-btn', this.handleLogoutOthers.bind(this));
+			$(document).on('click', '.sessionquota-destroy-session', this.handleDestroySession.bind(this));
 		},
 
 		/**
@@ -30,36 +30,36 @@ import './frontend.css';
 			e.preventDefault();
 
 			const $button = $(e.currentTarget);
-			const $wrapper = $button.closest('.session-limiter-logout-wrapper, .session-limiter-sessions-wrapper');
-			const $message = $wrapper.find('.session-limiter-message');
+			const $wrapper = $button.closest('.sessionquota-logout-wrapper, .sessionquota-sessions-wrapper');
+			const $message = $wrapper.find('.sessionquota-message');
 
 			// Confirm action
-			if (!confirm(sessionLimiterProFrontend.i18n.confirm)) {
+			if (!confirm(SessionQuotaProFrontend.i18n.confirm)) {
 				return;
 			}
 
 			// Disable button
-			$button.prop('disabled', true).text(sessionLimiterProFrontend.i18n.loggingOut);
+			$button.prop('disabled', true).text(SessionQuotaProFrontend.i18n.loggingOut);
 			$message.hide();
 
 			// Send AJAX request
 			$.ajax({
-				url: sessionLimiterProFrontend.ajaxUrl,
+				url: SessionQuotaProFrontend.ajaxUrl,
 				type: 'POST',
 				data: {
-					action: 'session_limiter_logout_others',
-					nonce: sessionLimiterProFrontend.nonce
+					action: 'sessionquota_logout_others',
+					nonce: SessionQuotaProFrontend.nonce
 				},
 				success: function(response) {
 					if (response.success) {
 						$message
-							.removeClass('session-limiter-error')
-							.addClass('session-limiter-success')
+							.removeClass('sessionquota-error')
+							.addClass('sessionquota-success')
 							.text(response.data.message)
 							.fadeIn();
 
 						// Update count
-						const $count = $button.find('.session-limiter-count');
+						const $count = $button.find('.sessionquota-count');
 						if ($count.length) {
 							const remainingSessions = Math.max(0, response.data.remaining_sessions - 1);
 							$count.text('(' + remainingSessions + ')');
@@ -74,7 +74,7 @@ import './frontend.css';
 
 						// Restore button text
 						setTimeout(function() {
-							$button.text(sessionLimiterProFrontend.i18n.success);
+							$button.text(SessionQuotaProFrontend.i18n.success);
 						}, 100);
 
 						// Reload page after 2 seconds to update session list
@@ -83,9 +83,9 @@ import './frontend.css';
 						}, 2000);
 					} else {
 						$message
-							.removeClass('session-limiter-success')
-							.addClass('session-limiter-error')
-							.text(response.data.message || sessionLimiterProFrontend.i18n.error)
+							.removeClass('sessionquota-success')
+							.addClass('sessionquota-error')
+							.text(response.data.message || SessionQuotaProFrontend.i18n.error)
 							.fadeIn();
 
 						$button.prop('disabled', false);
@@ -93,9 +93,9 @@ import './frontend.css';
 				},
 				error: function() {
 					$message
-						.removeClass('session-limiter-success')
-						.addClass('session-limiter-error')
-						.text(sessionLimiterProFrontend.i18n.error)
+						.removeClass('sessionquota-success')
+						.addClass('sessionquota-error')
+						.text(SessionQuotaProFrontend.i18n.error)
 						.fadeIn();
 
 					$button.prop('disabled', false);
@@ -111,27 +111,27 @@ import './frontend.css';
 
 			const $button = $(e.currentTarget);
 			const $row = $button.closest('tr');
-			const $wrapper = $button.closest('.session-limiter-sessions-wrapper');
-			const $message = $wrapper.find('.session-limiter-message');
+			const $wrapper = $button.closest('.sessionquota-sessions-wrapper');
+			const $message = $wrapper.find('.sessionquota-message');
 			const token = $button.data('token');
 
 			// Confirm action
-			if (!confirm(sessionLimiterProFrontend.i18n.confirmSingle)) {
+			if (!confirm(SessionQuotaProFrontend.i18n.confirmSingle)) {
 				return;
 			}
 
 			// Disable button
 			const originalText = $button.text();
-			$button.prop('disabled', true).text(sessionLimiterProFrontend.i18n.loggingOutSingle);
+			$button.prop('disabled', true).text(SessionQuotaProFrontend.i18n.loggingOutSingle);
 			$message.hide();
 
 			// Send AJAX request
 			$.ajax({
-				url: sessionLimiterProFrontend.ajaxUrl,
+				url: SessionQuotaProFrontend.ajaxUrl,
 				type: 'POST',
 				data: {
-					action: 'session_limiter_destroy_session',
-					nonce: sessionLimiterProFrontend.nonce,
+					action: 'sessionquota_destroy_session',
+					nonce: SessionQuotaProFrontend.nonce,
 					token: token
 				},
 				success: function(response) {
@@ -141,13 +141,13 @@ import './frontend.css';
 							$(this).remove();
 							
 							// Update session count in any displayed info
-							const $table = $wrapper.find('.session-limiter-table tbody');
+							const $table = $wrapper.find('.sessionquota-table tbody');
 							const remainingRows = $table.find('tr').length;
 							
 							// Update logout others button count if present
-							const $logoutBtn = $wrapper.find('#session-limiter-logout-others-btn');
+							const $logoutBtn = $wrapper.find('#sessionquota-logout-others-btn');
 							if ($logoutBtn.length) {
-								const $count = $logoutBtn.find('.session-limiter-count');
+								const $count = $logoutBtn.find('.sessionquota-count');
 								if ($count.length) {
 									$count.text('(' + Math.max(0, remainingRows - 1) + ')');
 								}
@@ -160,8 +160,8 @@ import './frontend.css';
 						});
 
 						$message
-							.removeClass('session-limiter-error')
-							.addClass('session-limiter-success')
+							.removeClass('sessionquota-error')
+							.addClass('sessionquota-success')
 							.text(response.data.message)
 							.fadeIn();
 
@@ -171,9 +171,9 @@ import './frontend.css';
 						}, 3000);
 					} else {
 						$message
-							.removeClass('session-limiter-success')
-							.addClass('session-limiter-error')
-							.text(response.data.message || sessionLimiterProFrontend.i18n.error)
+							.removeClass('sessionquota-success')
+							.addClass('sessionquota-error')
+							.text(response.data.message || SessionQuotaProFrontend.i18n.error)
 							.fadeIn();
 
 						$button.prop('disabled', false).text(originalText);
@@ -181,9 +181,9 @@ import './frontend.css';
 				},
 				error: function() {
 					$message
-						.removeClass('session-limiter-success')
-						.addClass('session-limiter-error')
-						.text(sessionLimiterProFrontend.i18n.error)
+						.removeClass('sessionquota-success')
+						.addClass('sessionquota-error')
+						.text(SessionQuotaProFrontend.i18n.error)
 						.fadeIn();
 
 					$button.prop('disabled', false).text(originalText);
@@ -194,7 +194,7 @@ import './frontend.css';
 
 	// Initialize on document ready
 	$(document).ready(function() {
-		SessionLimiterFrontend.init();
+		SessionQuotaFrontend.init();
 	});
 
 })(jQuery);

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="Session Limiter">
-	<description>WordPress Coding Standards for Session Limiter</description>
+<ruleset name="SessionQuota">
+	<description>WordPress Coding Standards for SessionQuota</description>
 
 	<!-- Files to check -->
 	<file>.</file>
@@ -36,7 +36,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="session-limiter"/>
+				<element value="sessionquota"/>
 			</property>
 		</properties>
 	</rule>
@@ -45,8 +45,8 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="session_limiter"/>
-				<element value="SessionLimiter"/>
+				<element value="sessionquota"/>
+				<element value="SessionQuota"/>
 			</property>
 		</properties>
 	</rule>

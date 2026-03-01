@@ -2,8 +2,8 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Session Limiter 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/session-limiter\n"
+"Project-Id-Version: SessionQuota 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sessionquota\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12,32 +12,32 @@ msgstr ""
 "POT-Creation-Date: 2026-02-20T11:48:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: session-limiter\n"
+"X-Domain: sessionquota\n"
 
 #. Plugin Name of the plugin
-#: session-limiter.php
+#: sessionquota.php
 #: includes/Admin/Settings.php:92
 #: includes/Admin/Settings.php:93
-msgid "Session Limiter"
+msgid "SessionQuota"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: session-limiter.php
-msgid "https://handyplugins.co/session-limiter/"
+#: sessionquota.php
+msgid "https://handyplugins.co/sessionquota/"
 msgstr ""
 
 #. Description of the plugin
-#: session-limiter.php
+#: sessionquota.php
 msgid "Limit concurrent user sessions in WordPress with simple session management."
 msgstr ""
 
 #. Author of the plugin
-#: session-limiter.php
+#: sessionquota.php
 msgid "HandyPlugins"
 msgstr ""
 
 #. Author URI of the plugin
-#: session-limiter.php
+#: sessionquota.php
 msgid "https://handyplugins.co/"
 msgstr ""
 
@@ -54,7 +54,7 @@ msgid "Enforcement Mode"
 msgstr ""
 
 #: includes/Admin/Settings.php:355
-msgid "Configure how Session Limiter handles concurrent user sessions."
+msgid "Configure how SessionQuota handles concurrent user sessions."
 msgstr ""
 
 #: includes/Admin/Settings.php:368
@@ -132,7 +132,7 @@ msgstr ""
 #: includes/Admin/views/monitoring.php:27
 #: includes/Admin/views/pro-upgrade.php:30
 #: includes/Admin/views/tools.php:26
-msgid "This feature is available in Session Limiter Pro. Upgrade to unlock advanced session management features."
+msgid "This feature is available in SessionQuota Pro. Upgrade to unlock advanced session management features."
 msgstr ""
 
 #: includes/Admin/views/advanced.php:29
@@ -525,7 +525,7 @@ msgid "Privacy"
 msgstr ""
 
 #: includes/Admin/views/monitoring.php:481
-msgid "Session Limiter Pro integrates with WordPress Privacy Tools for GDPR compliance. User data can be exported and erased through the standard WordPress privacy request system."
+msgid "SessionQuota Pro integrates with WordPress Privacy Tools for GDPR compliance. User data can be exported and erased through the standard WordPress privacy request system."
 msgstr ""
 
 #: includes/Admin/views/monitoring.php:487
@@ -550,7 +550,7 @@ msgstr ""
 
 #: includes/Admin/views/monitoring.php:509
 msgid ""
-"This website uses Session Limiter to manage user sessions and enhance security. When you log in, we may collect and process the following information:\n"
+"This website uses SessionQuota to manage user sessions and enhance security. When you log in, we may collect and process the following information:\n"
 "\n"
 "- Session data: We track active login sessions to enforce concurrent session limits.\n"
 "- IP addresses: We may log your IP address for security monitoring purposes.\n"
@@ -751,8 +751,8 @@ msgstr ""
 msgid "Logout all other sessions"
 msgstr ""
 
-#: session-limiter.php:128
-msgid "Session Limiter Pro was automatically deactivated to prevent conflicts. Only one Session Limiter edition can be active at a time."
+#: sessionquota.php:128
+msgid "SessionQuota Pro was automatically deactivated to prevent conflicts. Only one SessionQuota edition can be active at a time."
 msgstr ""
 
 #: assets/build/admin.js:1
@@ -845,7 +845,7 @@ msgstr ""
 
 #: assets/build/admin.js:3
 #: assets/src/admin.js:613
-msgid "Invalid settings file. Please select a valid Session Limiter PRO export file."
+msgid "Invalid settings file. Please select a valid SessionQuota PRO export file."
 msgstr ""
 
 #: assets/build/admin.js:3

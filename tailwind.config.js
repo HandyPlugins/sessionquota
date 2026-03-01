@@ -8,23 +8,23 @@ module.exports = {
 	theme: {
 		extend: {
 			keyframes: {
-				'session-limiter-fadeIn': {
+				'sessionquota-fadeIn': {
 					'from': { opacity: '0', transform: 'translateY(4px)' },
 					'to': { opacity: '1', transform: 'translateY(0)' },
 				},
-				'session-limiter-slideIn': {
+				'sessionquota-slideIn': {
 					'from': { opacity: '0', transform: 'translateY(-0.5rem)' },
 					'to': { opacity: '1', transform: 'translateY(0)' },
 				},
-				'session-limiter-spin': {
+				'sessionquota-spin': {
 					'from': { transform: 'rotate(0deg)' },
 					'to': { transform: 'rotate(360deg)' },
 				},
 			},
 			animation: {
-				'session-limiter-fadeIn': 'session-limiter-fadeIn 0.2s ease-out',
-				'session-limiter-slideIn': 'session-limiter-slideIn 0.3s ease-out',
-				'session-limiter-spin': 'session-limiter-spin 1s linear infinite',
+				'sessionquota-fadeIn': 'sessionquota-fadeIn 0.2s ease-out',
+				'sessionquota-slideIn': 'sessionquota-slideIn 0.3s ease-out',
+				'sessionquota-spin': 'sessionquota-spin 1s linear infinite',
 			},
 		},
 	},

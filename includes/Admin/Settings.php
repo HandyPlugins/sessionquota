@@ -2,10 +2,10 @@
 /**
  * Admin Settings
  *
- * @package SessionLimiter
+ * @package SessionQuota
  */
 
-namespace SessionLimiter\Admin;
+namespace SessionQuota\Admin;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,7 +29,7 @@ class Settings {
 	 *
 	 * @var string
 	 */
-	private $page_slug = 'session-limiter';
+	private $page_slug = 'sessionquota';
 
 	/**
 	 * Current tab.
@@ -89,8 +89,8 @@ class Settings {
 	 */
 	public function add_admin_menu() {
 		add_options_page(
-			__( 'Session Limiter', 'session-limiter' ),
-			__( 'Session Limiter', 'session-limiter' ),
+			__( 'SessionQuota', 'sessionquota' ),
+			__( 'SessionQuota', 'sessionquota' ),
 			self::get_required_capability(),
 			$this->page_slug,
 			array( $this, 'render_settings_page' )
@@ -109,7 +109,7 @@ class Settings {
 			return;
 		}
 
-		$asset_file = SESSION_LIMITER_PATH . 'assets/build/admin.asset.php';
+		$asset_file = SESSIONQUOTA_PATH . 'assets/build/admin.asset.php';
 
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -118,34 +118,34 @@ class Settings {
 		$asset = include $asset_file;
 
 		wp_enqueue_style(
-			'session-limiter-admin',
-			SESSION_LIMITER_URL . 'assets/build/admin.css',
+			'sessionquota-admin',
+			SESSIONQUOTA_URL . 'assets/build/admin.css',
 			array(),
 			$asset['version']
 		);
 
 		wp_enqueue_script(
-			'session-limiter-admin',
-			SESSION_LIMITER_URL . 'assets/build/admin.js',
+			'sessionquota-admin',
+			SESSIONQUOTA_URL . 'assets/build/admin.js',
 			$asset['dependencies'],
 			$asset['version'],
 			true
 		);
 
 		wp_localize_script(
-			'session-limiter-admin',
-			'sessionLimiter',
+			'sessionquota-admin',
+			'SessionQuota',
 			array(
-				'version' => SESSION_LIMITER_VERSION,
+				'version' => SESSIONQUOTA_VERSION,
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'session_limiter_nonce' ),
+				'nonce'   => wp_create_nonce( 'sessionquota_nonce' ),
 			)
 		);
 
 		wp_set_script_translations(
-			'session-limiter-admin',
-			'session-limiter',
-			SESSION_LIMITER_PATH . 'languages'
+			'sessionquota-admin',
+			'sessionquota',
+			SESSIONQUOTA_PATH . 'languages'
 		);
 	}
 
@@ -155,7 +155,7 @@ class Settings {
 	 * @return string
 	 */
 	public static function get_option_name() {
-		return \SessionLimiter\Core\Settings\EngineSettings::get_option_name();
+		return \SessionQuota\Core\Settings\EngineSettings::get_option_name();
 	}
 
 	/**
@@ -166,7 +166,7 @@ class Settings {
 	 * @return array Default settings.
 	 */
 	public static function get_default_settings() {
-		return \SessionLimiter\Core\Settings\EngineSettings::get_default_settings();
+		return \SessionQuota\Core\Settings\EngineSettings::get_default_settings();
 	}
 
 	/**
@@ -176,7 +176,7 @@ class Settings {
 	 * @return array
 	 */
 	public static function get_settings( $default_value = false ) {
-		return \SessionLimiter\Core\Settings\EngineSettings::get_settings( $default_value );
+		return \SessionQuota\Core\Settings\EngineSettings::get_settings( $default_value );
 	}
 
 	/**
@@ -205,7 +205,7 @@ class Settings {
 	 * @return bool
 	 */
 	public static function is_strict_mode( $settings = null ) {
-		return \SessionLimiter\Core\Settings\EngineSettings::is_strict_mode( $settings );
+		return \SessionQuota\Core\Settings\EngineSettings::is_strict_mode( $settings );
 	}
 
 	/**
@@ -215,7 +215,7 @@ class Settings {
 	 */
 	public function register_settings() {
 		register_setting(
-			'session_limiter_settings',
+			'sessionquota_settings',
 			self::get_option_name(),
 			array(
 				'type'              => 'array',
@@ -225,26 +225,26 @@ class Settings {
 		);
 
 		add_settings_section(
-			'session_limiter_general',
-			__( 'General Settings', 'session-limiter' ),
+			'sessionquota_general',
+			__( 'General Settings', 'sessionquota' ),
 			array( $this, 'render_general_section' ),
-			'session-limiter'
+			'sessionquota'
 		);
 
 		add_settings_field(
-			'session_limiter_limit',
-			__( 'Concurrent Session Limit', 'session-limiter' ),
+			'sessionquota_limit',
+			__( 'Concurrent Session Limit', 'sessionquota' ),
 			array( $this, 'render_limit_field' ),
-			'session-limiter',
-			'session_limiter_general'
+			'sessionquota',
+			'sessionquota_general'
 		);
 
 		add_settings_field(
-			'session_limiter_enforcement_mode',
-			__( 'Enforcement Mode', 'session-limiter' ),
+			'sessionquota_enforcement_mode',
+			__( 'Enforcement Mode', 'sessionquota' ),
 			array( $this, 'render_enforcement_mode_field' ),
-			'session-limiter',
-			'session_limiter_general'
+			'sessionquota',
+			'sessionquota_general'
 		);
 	}
 
@@ -337,9 +337,9 @@ class Settings {
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified by WordPress Options API.
-		if ( isset( $_POST['session_limiter_settings']['_tab'] ) ) {
+		if ( isset( $_POST['sessionquota_settings']['_tab'] ) ) {
 			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified by WordPress Options API.
-			$tab      = sanitize_key( wp_unslash( $_POST['session_limiter_settings']['_tab'] ) );
+			$tab      = sanitize_key( wp_unslash( $_POST['sessionquota_settings']['_tab'] ) );
 			$location = add_query_arg( 'tab', $tab, $location );
 		}
 
@@ -352,7 +352,7 @@ class Settings {
 	 * @return void
 	 */
 	public function render_general_section() {
-		echo '<p class="text-sm text-gray-600">' . esc_html__( 'Configure how Session Limiter handles concurrent user sessions.', 'session-limiter' ) . '</p>';
+		echo '<p class="text-sm text-gray-600">' . esc_html__( 'Configure how SessionQuota handles concurrent user sessions.', 'sessionquota' ) . '</p>';
 	}
 
 	/**
@@ -364,8 +364,8 @@ class Settings {
 		$settings = self::get_settings();
 		$limit    = isset( $settings['session_limit'] ) ? absint( $settings['session_limit'] ) : 1;
 		?>
-		<input type="number" name="session_limiter_settings[session_limit]" value="<?php echo esc_attr( $limit ); ?>" min="0" class="w-24 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="session-limit-input">
-		<p class="mt-2 text-sm text-gray-600"><?php esc_html_e( 'Maximum number of concurrent sessions allowed per user. Set to 0 for unlimited sessions (session limiting disabled).', 'session-limiter' ); ?></p>
+		<input type="number" name="sessionquota_settings[session_limit]" value="<?php echo esc_attr( $limit ); ?>" min="0" class="w-24 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="session-limit-input">
+		<p class="mt-2 text-sm text-gray-600"><?php esc_html_e( 'Maximum number of concurrent sessions allowed per user. Set to 0 for unlimited sessions (session limiting disabled).', 'sessionquota' ); ?></p>
 		<?php
 	}
 
@@ -379,13 +379,13 @@ class Settings {
 		$current_mode = isset( $settings['enforcement_mode'] ) ? $settings['enforcement_mode'] : 'logout_oldest';
 		$limit        = isset( $settings['session_limit'] ) ? absint( $settings['session_limit'] ) : 1;
 		$is_disabled  = ( 0 === $limit && 'logout_all_others' !== $current_mode );
-		$modes        = \SessionLimiter\Core\Engine\SessionEnforcer::get_enforcement_modes();
+		$modes        = \SessionQuota\Core\Engine\SessionEnforcer::get_enforcement_modes();
 		?>
 		<div class="space-y-3" id="enforcement-mode-container">
 			<?php foreach ( $modes as $mode => $label ) : ?>
 				<?php $mode_disabled = ( $is_disabled && 'logout_all_others' !== $mode ); ?>
 				<label class="flex items-start <?php echo $mode_disabled ? 'opacity-50' : ''; ?>">
-					<input type="radio" name="session_limiter_settings[enforcement_mode]" value="<?php echo esc_attr( $mode ); ?>" <?php checked( $current_mode, $mode ); ?> <?php disabled( $mode_disabled ); ?> class="mt-1 rounded-full border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+					<input type="radio" name="sessionquota_settings[enforcement_mode]" value="<?php echo esc_attr( $mode ); ?>" <?php checked( $current_mode, $mode ); ?> <?php disabled( $mode_disabled ); ?> class="mt-1 rounded-full border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
 					<span class="ml-3">
 						<span class="block text-sm font-medium text-gray-700"><?php echo esc_html( $label ); ?></span>
 						<span class="block text-sm text-gray-500"><?php echo esc_html( $this->get_enforcement_mode_description( $mode ) ); ?></span>
@@ -396,60 +396,13 @@ class Settings {
 		<?php if ( $is_disabled ) : ?>
 			<p class="mt-3 text-sm text-amber-600" id="enforcement-disabled-hint">
 				<span class="dashicons dashicons-info" style="font-size: 16px; width: 16px; height: 16px; margin-right: 4px;"></span>
-				<?php esc_html_e( 'Set the session limit to 1 or higher to enable block and logout-oldest modes. Strict mode remains available.', 'session-limiter' ); ?>
+				<?php esc_html_e( 'Set the session limit to 1 or higher to enable block and logout-oldest modes. Strict mode remains available.', 'sessionquota' ); ?>
 			</p>
 		<?php endif; ?>
-		<?php $this->render_block_mode_options_locked_field(); ?>
 		<?php
 	}
 
-	/**
-	 * Render blocked login recovery controls as locked upsell-only UI.
-	 *
-	 * @return void
-	 */
-	public function render_block_mode_options_locked_field() {
-		$defaults         = self::get_default_settings();
-		$settings         = self::get_settings();
-		$current_mode     = isset( $settings['enforcement_mode'] ) ? $settings['enforcement_mode'] : 'logout_oldest';
-		$show_options     = ( 'block' === $current_mode );
-		$cooldown_minutes = isset( $defaults['blocked_login_email_cooldown_minutes'] ) ? max( 1, min( 60, absint( $defaults['blocked_login_email_cooldown_minutes'] ) ) ) : 5;
-		$link_ttl_minutes = isset( $defaults['blocked_login_email_link_ttl_minutes'] ) ? max( 5, min( 120, absint( $defaults['blocked_login_email_link_ttl_minutes'] ) ) ) : 30;
-		$upgrade_url      = 'https://handyplugins.co/session-limiter-pro/';
-		?>
-		<div id="session-limiter-block-mode-options" class="mt-4 ml-6 pl-4 border-l-2 border-gray-200 space-y-3 <?php echo $show_options ? '' : 'hidden'; ?>">
-			<p class="text-sm font-semibold text-gray-700"><?php esc_html_e( 'Block mode options', 'session-limiter' ); ?></p>
-			<label class="inline-flex items-center cursor-not-allowed opacity-60">
-				<input type="checkbox" id="session-limiter-blocked-login-email-recovery-enabled" disabled class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-				<span class="ml-2 text-sm text-gray-700"><?php esc_html_e( 'Allow blocked users to recover access via email', 'session-limiter' ); ?></span>
-			</label>
-			<p class="text-sm text-gray-500">
-				<?php esc_html_e( 'When a login is blocked due to the session limit, the user can request a one-time email link to log out other active sessions and try again.', 'session-limiter' ); ?>
-			</p>
 
-			<div id="session-limiter-blocked-login-recovery-fields" class="grid grid-cols-1 md:grid-cols-2 gap-4 opacity-60">
-				<div>
-					<label for="session-limiter-blocked-login-email-cooldown" class="block text-sm font-medium text-gray-700"><?php esc_html_e( 'Email Cooldown (minutes)', 'session-limiter' ); ?></label>
-					<input type="number" id="session-limiter-blocked-login-email-cooldown" value="<?php echo esc_attr( $cooldown_minutes ); ?>" min="1" max="60" disabled class="mt-1 w-28 rounded-md border-gray-300 shadow-sm">
-				</div>
-				<div>
-					<label for="session-limiter-blocked-login-email-ttl" class="block text-sm font-medium text-gray-700"><?php esc_html_e( 'Recovery Link Expiry (minutes)', 'session-limiter' ); ?></label>
-					<input type="number" id="session-limiter-blocked-login-email-ttl" value="<?php echo esc_attr( $link_ttl_minutes ); ?>" min="5" max="120" disabled class="mt-1 w-28 rounded-md border-gray-300 shadow-sm">
-				</div>
-			</div>
-
-			<div class="flex flex-wrap items-center justify-between gap-3 rounded-md border border-indigo-100 bg-indigo-50 px-3 py-2.5">
-				<span class="inline-flex items-center text-sm font-medium text-indigo-700">
-					<span class="dashicons dashicons-lock mr-1.5" style="font-size: 16px; width: 16px; height: 16px;" aria-hidden="true"></span>
-					<?php esc_html_e( 'Available in Pro.', 'session-limiter' ); ?>
-				</span>
-				<a href="<?php echo esc_url( $upgrade_url ); ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm !text-white !no-underline bg-indigo-600 hover:!bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-					<?php esc_html_e( 'Upgrade to Pro', 'session-limiter' ); ?>
-				</a>
-			</div>
-		</div>
-		<?php
-	}
 
 	/**
 	 * Get enforcement mode description.
@@ -459,9 +412,9 @@ class Settings {
 	 */
 	private function get_enforcement_mode_description( $mode ) {
 		$descriptions = array(
-			'block'             => __( 'Prevent new login when limit is reached. User must logout from another device first.', 'session-limiter' ),
-			'logout_oldest'     => __( 'Remove only the oldest session(s) needed to stay within the limit. Respects the session limit setting.', 'session-limiter' ),
-			'logout_all_others' => __( 'Always logout ALL other sessions on new login, keeping only the current session. Ignores the session limit.', 'session-limiter' ),
+			'block'             => __( 'Prevent new login when limit is reached. User must logout from another device first.', 'sessionquota' ),
+			'logout_oldest'     => __( 'Remove only the oldest session(s) needed to stay within the limit. Respects the session limit setting.', 'sessionquota' ),
+			'logout_all_others' => __( 'Always logout ALL other sessions on new login, keeping only the current session. Ignores the session limit.', 'sessionquota' ),
 		);
 
 		return isset( $descriptions[ $mode ] ) ? $descriptions[ $mode ] : '';
@@ -479,7 +432,7 @@ class Settings {
 
 		$tabs = $this->get_tabs();
 
-		require_once SESSION_LIMITER_PATH . 'includes/Admin/views/settings.php';
+		require_once SESSIONQUOTA_PATH . 'includes/Admin/views/settings.php';
 	}
 
 	/**
@@ -490,21 +443,21 @@ class Settings {
 	private function get_tabs() {
 		return array(
 			'general'    => array(
-				'label' => __( 'General', 'session-limiter' ),
+				'label' => __( 'General', 'sessionquota' ),
 				'icon'  => 'dashicons-admin-generic',
 			),
 			'advanced'   => array(
-				'label' => __( 'Advanced', 'session-limiter' ),
+				'label' => __( 'Advanced', 'sessionquota' ),
 				'icon'  => 'dashicons-admin-settings',
 				'pro'   => true,
 			),
 			'tools'      => array(
-				'label' => __( 'Tools', 'session-limiter' ),
+				'label' => __( 'Tools', 'sessionquota' ),
 				'icon'  => 'dashicons-admin-tools',
 				'pro'   => true,
 			),
 			'monitoring' => array(
-				'label' => __( 'Monitoring', 'session-limiter' ),
+				'label' => __( 'Monitoring', 'sessionquota' ),
 				'icon'  => 'dashicons-chart-area',
 				'pro'   => true,
 			),

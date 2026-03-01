@@ -2,12 +2,12 @@
 /**
  * Shared settings schema/helper for engine.
  *
- * @package SessionLimiter\Core
+ * @package SessionQuota\Core
  */
 
-namespace SessionLimiter\Core\Settings;
+namespace SessionQuota\Core\Settings;
 
-use SessionLimiter\Core\Contracts\Hooks;
+use SessionQuota\Core\Contracts\Hooks;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,12 +22,12 @@ class EngineSettings {
 	/**
 	 * Shared option key used by both Free and PRO.
 	 */
-	const OPTION_NAME = 'session_limiter_settings';
+	const OPTION_NAME = 'sessionquota_settings';
 
 	/**
 	 * Default user meta key for per-user session limit override.
 	 */
-	const DEFAULT_USER_LIMIT_META_KEY = '_session_limiter_limit';
+	const DEFAULT_USER_LIMIT_META_KEY = '_sessionquota_limit';
 
 	/**
 	 * Get settings option name.

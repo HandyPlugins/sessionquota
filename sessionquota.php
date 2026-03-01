@@ -1,22 +1,22 @@
 <?php
 /**
- * Plugin Name: Session Limiter
- * Plugin URI: https://handyplugins.co/session-limiter/
+ * Plugin Name: SessionQuota
+ * Plugin URI: https://handyplugins.co/sessionquota/
  * Description: Limit concurrent user sessions in WordPress with simple session management.
  * Version: 1.0.0
  * Author: HandyPlugins
  * Author URI: https://handyplugins.co/
- * Text Domain: session-limiter
+ * Text Domain: sessionquota
  * Domain Path: /languages
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Requires at least: 5.9
  * Requires PHP: 7.4
  *
- * @package SessionLimiter
+ * @package SessionQuota
  */
 
-namespace SessionLimiter;
+namespace SessionQuota;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -24,21 +24,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'SESSION_LIMITER_VERSION', '1.0.0' );
-define( 'SESSION_LIMITER_FILE', __FILE__ );
-define( 'SESSION_LIMITER_PATH', plugin_dir_path( __FILE__ ) );
-define( 'SESSION_LIMITER_URL', plugin_dir_url( __FILE__ ) );
-define( 'SESSION_LIMITER_BASENAME', plugin_basename( __FILE__ ) );
+define( 'SESSIONQUOTA_VERSION', '1.0.0' );
+define( 'SESSIONQUOTA_FILE', __FILE__ );
+define( 'SESSIONQUOTA_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SESSIONQUOTA_URL', plugin_dir_url( __FILE__ ) );
+define( 'SESSIONQUOTA_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
  * Shared request-level winner marker used to avoid ping-pong deactivation.
  */
-const SESSION_LIMITER_CONFLICT_WINNER_MARKER = 'SESSION_LIMITER_ACTIVE_EDITION';
+const SESSIONQUOTA_CONFLICT_WINNER_MARKER = 'SESSIONQUOTA_ACTIVE_EDITION';
 
 /**
  * Transient key for conflict admin notice.
  */
-const SESSION_LIMITER_CONFLICT_NOTICE_TRANSIENT = 'session_limiter_conflict_notice';
+const SESSIONQUOTA_CONFLICT_NOTICE_TRANSIENT = 'sessionquota_conflict_notice';
 
 /**
  * Determine if current user can manage plugins.
@@ -63,7 +63,7 @@ function can_manage_plugins() {
  */
 function queue_conflict_notice( $message ) {
 	set_transient(
-		SESSION_LIMITER_CONFLICT_NOTICE_TRANSIENT,
+		SESSIONQUOTA_CONFLICT_NOTICE_TRANSIENT,
 		array(
 			'message' => (string) $message,
 			'type'    => 'warning',
@@ -78,12 +78,12 @@ function queue_conflict_notice( $message ) {
  * @return void
  */
 function render_conflict_notice() {
-	$notice = get_transient( SESSION_LIMITER_CONFLICT_NOTICE_TRANSIENT );
+	$notice = get_transient( SESSIONQUOTA_CONFLICT_NOTICE_TRANSIENT );
 	if ( empty( $notice ) || empty( $notice['message'] ) ) {
 		return;
 	}
 
-	delete_transient( SESSION_LIMITER_CONFLICT_NOTICE_TRANSIENT );
+	delete_transient( SESSIONQUOTA_CONFLICT_NOTICE_TRANSIENT );
 
 	$type = ! empty( $notice['type'] ) ? sanitize_html_class( $notice['type'] ) : 'warning';
 	?>
@@ -105,11 +105,11 @@ function maybe_handle_edition_conflict() {
 		return false;
 	}
 
-	if ( defined( SESSION_LIMITER_CONFLICT_WINNER_MARKER ) ) {
-		return 'free' !== constant( SESSION_LIMITER_CONFLICT_WINNER_MARKER );
+	if ( defined( SESSIONQUOTA_CONFLICT_WINNER_MARKER ) ) {
+		return 'free' !== constant( SESSIONQUOTA_CONFLICT_WINNER_MARKER );
 	}
 
-	if ( ! defined( 'SESSION_LIMITER_PRO_FILE' ) ) {
+	if ( ! defined( 'SESSIONQUOTA_PRO_FILE' ) ) {
 		return false;
 	}
 
@@ -117,15 +117,15 @@ function maybe_handle_edition_conflict() {
 		include_once ABSPATH . 'wp-admin/includes/plugin.php';
 	}
 
-	$pro_plugin_file = plugin_basename( SESSION_LIMITER_PRO_FILE );
+	$pro_plugin_file = plugin_basename( SESSIONQUOTA_PRO_FILE );
 	if ( ! is_plugin_active( $pro_plugin_file ) ) {
 		return false;
 	}
 
 	deactivate_plugins( $pro_plugin_file );
 
-	define( SESSION_LIMITER_CONFLICT_WINNER_MARKER, 'free' );
-	queue_conflict_notice( __( 'Session Limiter Pro was automatically deactivated to prevent conflicts. Only one Session Limiter edition can be active at a time.', 'session-limiter' ) );
+	define( SESSIONQUOTA_CONFLICT_WINNER_MARKER, 'free' );
+	queue_conflict_notice( __( 'SessionQuota Pro was automatically deactivated to prevent conflicts. Only one SessionQuota edition can be active at a time.', 'sessionquota' ) );
 
 	return true;
 }
@@ -142,8 +142,8 @@ if ( maybe_handle_edition_conflict() ) {
 spl_autoload_register(
 	function ( $class_name ) {
 		$prefixes = array(
-			'SessionLimiter\\Core\\' => __DIR__ . '/includes/Core/',
-			'SessionLimiter\\'       => __DIR__ . '/includes/',
+			'SessionQuota\\Core\\' => __DIR__ . '/includes/Core/',
+			'SessionQuota\\'       => __DIR__ . '/includes/',
 		);
 
 		foreach ( $prefixes as $prefix => $base_dir ) {
@@ -177,9 +177,9 @@ function init() {
 	}
 
 	// Initialize session enforcement.
-	$token_repository = new \SessionLimiter\Core\Engine\TokenRepository();
-	$limit_resolver   = new \SessionLimiter\Core\Engine\LimitResolver();
-	$enforcer         = new \SessionLimiter\Core\Engine\SessionEnforcer( $token_repository, $limit_resolver );
+	$token_repository = new \SessionQuota\Core\Engine\TokenRepository();
+	$limit_resolver   = new \SessionQuota\Core\Engine\LimitResolver();
+	$enforcer         = new \SessionQuota\Core\Engine\SessionEnforcer( $token_repository, $limit_resolver );
 	$enforcer->init();
 }
 

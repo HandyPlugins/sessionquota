@@ -4,10 +4,10 @@
  *
  * Wrapper around WordPress session tokens functionality.
  *
- * @package SessionLimiter\Core
+ * @package SessionQuota\Core
  */
 
-namespace SessionLimiter\Core\Engine;
+namespace SessionQuota\Core\Engine;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
