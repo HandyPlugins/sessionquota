@@ -384,9 +384,9 @@ class Settings {
 		<div class="space-y-3" id="enforcement-mode-container">
 			<?php foreach ( $modes as $mode => $label ) : ?>
 				<?php $mode_disabled = ( $is_disabled && 'logout_all_others' !== $mode ); ?>
-				<label class="flex items-start <?php echo $mode_disabled ? 'opacity-50' : ''; ?>">
-					<input type="radio" name="sessionquota_settings[enforcement_mode]" value="<?php echo esc_attr( $mode ); ?>" <?php checked( $current_mode, $mode ); ?> <?php disabled( $mode_disabled ); ?> class="mt-1 rounded-full border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-					<span class="ml-3">
+				<label class="flex items-start <?php echo $mode_disabled ? 'opacity-50' : ''; ?>" style="gap: 0.75rem;">
+					<input type="radio" name="sessionquota_settings[enforcement_mode]" value="<?php echo esc_attr( $mode ); ?>" <?php checked( $current_mode, $mode ); ?> <?php disabled( $mode_disabled ); ?> class="flex-shrink-0 rounded-full border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" style="margin-top: 0.125rem;">
+					<span>
 						<span class="block text-sm font-medium text-gray-700"><?php echo esc_html( $label ); ?></span>
 						<span class="block text-sm text-gray-500"><?php echo esc_html( $this->get_enforcement_mode_description( $mode ) ); ?></span>
 					</span>
