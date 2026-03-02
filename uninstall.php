@@ -106,7 +106,7 @@ function sessionquota_free_uninstall_delete_transient_patterns() {
 }
 
 /**
- * Delete all session limiter user meta.
+ * Delete all SessionQuota user meta.
  *
  * @return void
  */
