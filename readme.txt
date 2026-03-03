@@ -64,7 +64,6 @@ Go to `Settings -> SessionQuota` in wp-admin.
 `0` means unlimited sessions. In this case, session limiting is effectively disabled unless you choose `Logout all other sessions` (single-session mode).
 
 
-
 == Changelog ==
 
 = 1.0.0 =

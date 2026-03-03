@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: SessionQuota
- * Plugin URI: https://handyplugins.co/sessionquota/
- * Description: Limit concurrent user sessions in WordPress with simple session management.
+ * Plugin URI: https://github.com/HandyPlugins/sessionquota
+ * Description: Limit concurrent user sessions with simple session management.
  * Version: 1.0.0
  * Author: HandyPlugins
  * Author URI: https://handyplugins.co/
@@ -184,27 +184,3 @@ function init() {
 }
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\init' );
-
-/**
- * Plugin activation hook.
- *
- * @return void
- */
-function activate() {
-	// Activation logic here if needed.
-	flush_rewrite_rules();
-}
-
-register_activation_hook( __FILE__, __NAMESPACE__ . '\\activate' );
-
-/**
- * Plugin deactivation hook.
- *
- * @return void
- */
-function deactivate() {
-	// Deactivation logic here if needed.
-	flush_rewrite_rules();
-}
-
-register_deactivation_hook( __FILE__, __NAMESPACE__ . '\\deactivate' );

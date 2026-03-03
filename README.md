@@ -5,8 +5,6 @@ Limit concurrent user sessions in WordPress with simple, configurable enforcemen
 ## Links
 
 - Plugin page: https://wordpress.org/plugins/sessionquota/
-- PRO: https://handyplugins.co/sessionquota-pro/
-- Documentation: https://handyplugins.co/docs-category/sessionquota/
 
 ## Features
 

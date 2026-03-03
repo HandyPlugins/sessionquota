@@ -1,0 +1,391 @@
+# Copyright (C) 2026 HandyPlugins
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: SessionQuota 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sessionquota\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-03-03T19:17:23+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: sessionquota\n"
+
+#. Plugin Name of the plugin
+#: sessionquota.php
+#: includes/Admin/Settings.php:92
+#: includes/Admin/Settings.php:93
+msgid "SessionQuota"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: sessionquota.php
+msgid "https://github.com/HandyPlugins/sessionquota"
+msgstr ""
+
+#. Description of the plugin
+#: sessionquota.php
+msgid "Limit concurrent user sessions with simple session management."
+msgstr ""
+
+#. Author of the plugin
+#: sessionquota.php
+msgid "HandyPlugins"
+msgstr ""
+
+#. Author URI of the plugin
+#: sessionquota.php
+msgid "https://handyplugins.co/"
+msgstr ""
+
+#: includes/Admin/Settings.php:229
+msgid "General Settings"
+msgstr ""
+
+#: includes/Admin/Settings.php:236
+msgid "Concurrent Session Limit"
+msgstr ""
+
+#: includes/Admin/Settings.php:244
+msgid "Enforcement Mode"
+msgstr ""
+
+#: includes/Admin/Settings.php:355
+msgid "Configure how SessionQuota handles concurrent user sessions."
+msgstr ""
+
+#: includes/Admin/Settings.php:368
+msgid "Maximum number of concurrent sessions allowed per user. Set to 0 for unlimited sessions (session limiting disabled)."
+msgstr ""
+
+#: includes/Admin/Settings.php:399
+msgid "Set the session limit to 1 or higher to enable block and logout-oldest modes. Strict mode remains available."
+msgstr ""
+
+#: includes/Admin/Settings.php:415
+msgid "Prevent new login when limit is reached. User must logout from another device first."
+msgstr ""
+
+#: includes/Admin/Settings.php:416
+msgid "Remove only the oldest session(s) needed to stay within the limit. Respects the session limit setting."
+msgstr ""
+
+#: includes/Admin/Settings.php:417
+msgid "Always logout ALL other sessions on new login, keeping only the current session. Ignores the session limit."
+msgstr ""
+
+#: includes/Admin/Settings.php:446
+msgid "General"
+msgstr ""
+
+#: includes/Admin/Settings.php:450
+msgid "Advanced"
+msgstr ""
+
+#: includes/Admin/Settings.php:455
+msgid "Tools"
+msgstr ""
+
+#: includes/Admin/Settings.php:460
+msgid "Monitoring"
+msgstr ""
+
+#: includes/Admin/views/settings.php:41
+msgid "Save Settings"
+msgstr ""
+
+#: includes/Core/Engine/LimitResolver.php:197
+msgid "Strict Single Session"
+msgstr ""
+
+#: includes/Core/Engine/LimitResolver.php:206
+msgid "User Override"
+msgstr ""
+
+#: includes/Core/Engine/LimitResolver.php:215
+msgid "Membership Level"
+msgstr ""
+
+#: includes/Core/Engine/LimitResolver.php:224
+msgid "User Role"
+msgstr ""
+
+#: includes/Core/Engine/LimitResolver.php:231
+msgid "Global Default"
+msgstr ""
+
+#: includes/Core/Engine/SessionEnforcer.php:345
+#: includes/Core/Engine/SessionEnforcer.php:373
+msgid "Session limit exceeded. Please log out from another device first."
+msgstr ""
+
+#: includes/Core/Engine/SessionEnforcer.php:675
+msgid "Block new login"
+msgstr ""
+
+#: includes/Core/Engine/SessionEnforcer.php:676
+msgid "Logout oldest session"
+msgstr ""
+
+#: includes/Core/Engine/SessionEnforcer.php:677
+msgid "Logout all other sessions"
+msgstr ""
+
+#: sessionquota.php:128
+msgid "SessionQuota Pro was automatically deactivated to prevent conflicts. Only one SessionQuota edition can be active at a time."
+msgstr ""
+
+#: assets/build/admin.js:1
+#: assets/src/admin.js:311
+msgid "Sessions:"
+msgstr ""
+
+#: assets/build/admin.js:1
+#: assets/src/admin.js:275
+msgid "No users found"
+msgstr ""
+
+#: assets/build/admin.js:1
+#: assets/src/admin.js:375
+msgid "Force Logout User"
+msgstr ""
+
+#. translators: %s: username
+#: assets/build/admin.js:2
+#: assets/src/admin.js:378
+#, js-format
+msgid "Are you sure you want to terminate all sessions for %s? They will be logged out immediately."
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:400
+#: assets/src/admin.js:442
+#: assets/src/admin.js:488
+msgid "An error occurred."
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:403
+#: assets/src/admin.js:445
+#: assets/src/admin.js:491
+msgid "An error occurred while processing the request."
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:370
+msgid "Please select a user first."
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:423
+msgid "Logout All Sessions"
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:424
+msgid "Are you sure you want to terminate all sessions for all users? This action cannot be undone. Your current session will be preserved."
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:465
+msgid "Reset Plugin Settings"
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:466
+msgid "Are you sure you want to reset all plugin settings to their default values? This action cannot be undone."
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:512
+msgid "Exporting..."
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:540
+msgid "Settings exported successfully."
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:542
+msgid "Export failed."
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:545
+msgid "An error occurred while exporting settings."
+msgstr ""
+
+#: assets/build/admin.js:2
+#: assets/src/admin.js:581
+msgid "Please select a valid JSON file."
+msgstr ""
+
+#. translators: %1$s: filename, %2$s: date
+#: assets/build/admin.js:3
+#: assets/src/admin.js:606
+#, js-format
+msgid "Selected: %1$s (exported: %2$s)"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:608
+msgid "Unknown"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:613
+msgid "Invalid settings file. Please select a valid SessionQuota PRO export file."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:622
+msgid "Error reading file."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:639
+msgid "Import Settings"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:640
+msgid "Are you sure you want to import these settings? This will overwrite your current settings and cannot be undone."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:644
+msgid "Importing..."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:666
+msgid "Import failed."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:671
+msgid "An error occurred while importing settings."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:634
+msgid "Please select a file first."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:968
+msgid "License Key Not Found"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:969
+msgid "License Expired"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:970
+msgid "Activation Limit Reached"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:971
+msgid "Invalid License"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:972
+msgid "Domain Not Registered"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:981
+msgid "Please enter your license key to activate the plugin."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:983
+msgid "License Key Required"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:990
+msgid "Activating..."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1009
+msgid "License Activated"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1014
+msgid "Activation failed. Please check your license key and try again."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1016
+msgid "Activation Failed"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1021
+#: assets/src/admin.js:1031
+msgid "Activate License"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1025
+msgid "Could not connect to the license server. Please check your internet connection and try again."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1027
+#: assets/src/admin.js:1078
+msgid "Connection Error"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1039
+#: assets/src/admin.js:1072
+#: assets/src/admin.js:1082
+msgid "Deactivate License"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1040
+msgid "Are you sure you want to deactivate your license? You will no longer receive updates."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1043
+msgid "Deactivating..."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1061
+msgid "License Deactivated"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1067
+msgid "Deactivation failed. Please try again."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1069
+msgid "Deactivation Failed"
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:1076
+msgid "Could not connect to the license server. Please try again."
+msgstr ""
+
+#: assets/build/admin.js:3
+#: assets/src/admin.js:924
+msgid "Dismiss notification"
+msgstr ""
