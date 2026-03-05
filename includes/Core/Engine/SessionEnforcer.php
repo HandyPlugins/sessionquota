@@ -33,16 +33,6 @@ class SessionEnforcer {
 	const BLOCKED_LOGIN_NOTICE_COOKIE = 'sessionquota_login_blocked';
 
 	/**
-	 * Cookie name used to identify the blocked user for one-click recovery email.
-	 */
-	const BLOCKED_LOGIN_RECOVERY_COOKIE = 'sessionquota_login_blocked_recovery';
-
-	/**
-	 * Lifetime in seconds for the blocked-login recovery cookie.
-	 */
-	const BLOCKED_LOGIN_RECOVERY_COOKIE_TTL = 600;
-
-	/**
 	 * Global flag key used to mark blocked login state for current request.
 	 */
 	const BLOCKED_LOGIN_PROMPT_GLOBAL = 'sessionquota_blocked_login_prompt';
@@ -172,7 +162,6 @@ class SessionEnforcer {
 				$token_key                               = $this->get_auth_cookie_token_key( $user_id, $token );
 				$this->blocked_auth_tokens[ $token_key ] = true;
 				$this->set_blocked_login_notice_cookie();
-				$this->set_blocked_login_recovery_cookie( $user_id );
 
 				/**
 				 * Fires when a login is blocked due to session limit.
@@ -357,7 +346,6 @@ class SessionEnforcer {
 	 */
 	private function block_login( $user ) {
 		$this->mark_blocked_login_prompt();
-		$this->set_blocked_login_recovery_cookie( $user->ID );
 
 		/**
 		 * Fires when a login is blocked due to session limit.
@@ -520,87 +508,6 @@ class SessionEnforcer {
 			'1',
 			time() + MINUTE_IN_SECONDS
 		);
-	}
-
-	/**
-	 * Set one-time cookie carrying blocked user identity for recovery action.
-	 *
-	 * @param int $user_id User ID.
-	 * @return void
-	 */
-	private function set_blocked_login_recovery_cookie( $user_id ) {
-		$user_id = absint( $user_id );
-		if ( $user_id <= 0 ) {
-			return;
-		}
-
-		$expires = time() + self::BLOCKED_LOGIN_RECOVERY_COOKIE_TTL;
-		$value   = self::build_blocked_login_recovery_cookie_value( $user_id, $expires );
-
-		$this->set_blocked_login_cookie(
-			self::BLOCKED_LOGIN_RECOVERY_COOKIE,
-			$value,
-			$expires
-		);
-	}
-
-	/**
-	 * Read blocked-login recovery cookie and return valid user ID.
-	 *
-	 * @return int User ID or 0 when missing/invalid/expired.
-	 */
-	public static function get_blocked_login_recovery_user_id_from_cookie() {
-		if ( empty( $_COOKIE[ self::BLOCKED_LOGIN_RECOVERY_COOKIE ] ) ) {
-			return 0;
-		}
-
-		return self::parse_blocked_login_recovery_cookie_value(
-			sanitize_text_field( wp_unslash( $_COOKIE[ self::BLOCKED_LOGIN_RECOVERY_COOKIE ] ) )
-		);
-	}
-
-	/**
-	 * Build signed blocked-login recovery cookie value.
-	 *
-	 * @param int $user_id User ID.
-	 * @param int $expires Expiration timestamp.
-	 * @return string
-	 */
-	private static function build_blocked_login_recovery_cookie_value( $user_id, $expires ) {
-		$data      = absint( $user_id ) . '|' . absint( $expires );
-		$signature = hash_hmac( 'sha256', $data, wp_salt( 'auth' ) );
-
-		return $data . '|' . $signature;
-	}
-
-	/**
-	 * Parse and validate signed blocked-login recovery cookie value.
-	 *
-	 * @param string $value Cookie value.
-	 * @return int User ID or 0 when invalid.
-	 */
-	private static function parse_blocked_login_recovery_cookie_value( $value ) {
-		$parts = explode( '|', (string) $value );
-		if ( 3 !== count( $parts ) ) {
-			return 0;
-		}
-
-		$user_id   = absint( $parts[0] );
-		$expires   = absint( $parts[1] );
-		$signature = sanitize_text_field( $parts[2] );
-
-		if ( $user_id <= 0 || $expires <= 0 || $expires < time() ) {
-			return 0;
-		}
-
-		$data     = $user_id . '|' . $expires;
-		$expected = hash_hmac( 'sha256', $data, wp_salt( 'auth' ) );
-
-		if ( ! hash_equals( $expected, $signature ) ) {
-			return 0;
-		}
-
-		return $user_id;
 	}
 
 	/**
