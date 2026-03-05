@@ -32,24 +32,12 @@ class Settings {
 	private $page_slug = 'sessionquota';
 
 	/**
-	 * Current tab.
-	 *
-	 * @var string
-	 */
-	private $current_tab = 'general';
-
-	/**
 	 * Constructor.
 	 */
 	private function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_filter( 'wp_redirect', array( $this, 'preserve_tab_on_redirect' ), 10, 2 );
-
-		// Set current tab.
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$this->current_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'general';
 	}
 
 	/**
@@ -161,8 +149,6 @@ class Settings {
 	/**
 	 * Get default settings.
 	 *
-	 * Keep shared keys aligned with PRO and preserve PRO-only keys during Free saves.
-	 *
 	 * @return array Default settings.
 	 */
 	public static function get_default_settings() {
@@ -260,14 +246,11 @@ class Settings {
 		}
 
 		$defaults = self::get_default_settings();
-
-		$existing_raw = self::get_settings( array() );
-		if ( ! is_array( $existing_raw ) ) {
-			$existing_raw = array();
+		$existing  = self::get_settings();
+		$sanitized = $defaults;
+		if ( ! is_array( $existing ) ) {
+			$existing = $defaults;
 		}
-
-		$existing  = wp_parse_args( $existing_raw, $defaults );
-		$sanitized = wp_parse_args( $existing_raw, $defaults );
 
 		$session_limit              = isset( $settings['session_limit'] ) ? $settings['session_limit'] : $existing['session_limit'];
 		$sanitized['session_limit'] = ( is_numeric( $session_limit ) && intval( $session_limit ) >= 0 )
@@ -277,34 +260,6 @@ class Settings {
 		$sanitized['enforcement_mode'] = isset( $settings['enforcement_mode'] )
 			? $this->sanitize_enforcement_mode( $settings['enforcement_mode'] )
 			: $existing['enforcement_mode'];
-
-		// Preserve shared core settings that are not editable in Free UI.
-		$sanitized['frontend_integration_enabled'] = isset( $existing['frontend_integration_enabled'] )
-			? (bool) $existing['frontend_integration_enabled']
-			: $defaults['frontend_integration_enabled'];
-
-		// Guard against crafted requests: blocked-login recovery settings are PRO-only.
-		$sanitized['blocked_login_email_recovery_enabled'] = isset( $existing['blocked_login_email_recovery_enabled'] )
-			? (bool) $existing['blocked_login_email_recovery_enabled']
-			: (bool) $defaults['blocked_login_email_recovery_enabled'];
-		$sanitized['blocked_login_email_cooldown_minutes'] = isset( $existing['blocked_login_email_cooldown_minutes'] )
-			? max( 1, min( 60, absint( $existing['blocked_login_email_cooldown_minutes'] ) ) )
-			: max( 1, min( 60, absint( $defaults['blocked_login_email_cooldown_minutes'] ) ) );
-		$sanitized['blocked_login_email_link_ttl_minutes'] = isset( $existing['blocked_login_email_link_ttl_minutes'] )
-			? max( 5, min( 120, absint( $existing['blocked_login_email_link_ttl_minutes'] ) ) )
-			: max( 5, min( 120, absint( $defaults['blocked_login_email_link_ttl_minutes'] ) ) );
-
-		$sanitized['role_limits']        = ( isset( $existing['role_limits'] ) && is_array( $existing['role_limits'] ) )
-			? $existing['role_limits']
-			: array();
-		$sanitized['membership_enabled'] = isset( $existing['membership_enabled'] )
-			? (bool) $existing['membership_enabled']
-			: false;
-		$sanitized['membership_limits']  = ( isset( $existing['membership_limits'] ) && is_array( $existing['membership_limits'] ) )
-			? $existing['membership_limits']
-			: array();
-
-		unset( $sanitized['_tab'] );
 
 		return $sanitized;
 	}
@@ -318,32 +273,6 @@ class Settings {
 	public function sanitize_enforcement_mode( $value ) {
 		$valid_modes = array( 'block', 'logout_oldest', 'logout_all_others' );
 		return in_array( $value, $valid_modes, true ) ? $value : 'logout_oldest';
-	}
-
-	/**
-	 * Preserve tab parameter on settings save redirect.
-	 *
-	 * @param string $location The redirect URL.
-	 * @param int    $status   The HTTP response status code.
-	 * @return string
-	 */
-	public function preserve_tab_on_redirect( $location, $status ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Required by wp_redirect filter.
-		if ( false === strpos( $location, 'options-general.php' ) ) {
-			return $location;
-		}
-
-		if ( false === strpos( $location, 'page=' . $this->page_slug ) ) {
-			return $location;
-		}
-
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified by WordPress Options API.
-		if ( isset( $_POST['sessionquota_settings']['_tab'] ) ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified by WordPress Options API.
-			$tab      = sanitize_key( wp_unslash( $_POST['sessionquota_settings']['_tab'] ) );
-			$location = add_query_arg( 'tab', $tab, $location );
-		}
-
-		return $location;
 	}
 
 	/**
@@ -430,46 +359,6 @@ class Settings {
 			return;
 		}
 
-		$tabs = $this->get_tabs();
-
 		require_once SESSIONQUOTA_PATH . 'includes/Admin/views/settings.php';
-	}
-
-	/**
-	 * Get available tabs.
-	 *
-	 * @return array
-	 */
-	private function get_tabs() {
-		return array(
-			'general'    => array(
-				'label' => __( 'General', 'sessionquota' ),
-				'icon'  => 'dashicons-admin-generic',
-			),
-			'advanced'   => array(
-				'label' => __( 'Advanced', 'sessionquota' ),
-				'icon'  => 'dashicons-admin-settings',
-				'pro'   => true,
-			),
-			'tools'      => array(
-				'label' => __( 'Tools', 'sessionquota' ),
-				'icon'  => 'dashicons-admin-tools',
-				'pro'   => true,
-			),
-			'monitoring' => array(
-				'label' => __( 'Monitoring', 'sessionquota' ),
-				'icon'  => 'dashicons-chart-area',
-				'pro'   => true,
-			),
-		);
-	}
-
-	/**
-	 * Get current tab.
-	 *
-	 * @return string
-	 */
-	public function get_current_tab() {
-		return $this->current_tab;
 	}
 }

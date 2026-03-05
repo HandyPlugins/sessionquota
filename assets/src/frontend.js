@@ -34,21 +34,21 @@ import './frontend.css';
 			const $message = $wrapper.find('.sessionquota-message');
 
 			// Confirm action
-			if (!confirm(SessionQuotaProFrontend.i18n.confirm)) {
+			if (!confirm(SessionQuotaFrontend.i18n.confirm)) {
 				return;
 			}
 
 			// Disable button
-			$button.prop('disabled', true).text(SessionQuotaProFrontend.i18n.loggingOut);
+			$button.prop('disabled', true).text(SessionQuotaFrontend.i18n.loggingOut);
 			$message.hide();
 
 			// Send AJAX request
 			$.ajax({
-				url: SessionQuotaProFrontend.ajaxUrl,
+				url: SessionQuotaFrontend.ajaxUrl,
 				type: 'POST',
 				data: {
 					action: 'sessionquota_logout_others',
-					nonce: SessionQuotaProFrontend.nonce
+					nonce: SessionQuotaFrontend.nonce
 				},
 				success: function(response) {
 					if (response.success) {
@@ -74,7 +74,7 @@ import './frontend.css';
 
 						// Restore button text
 						setTimeout(function() {
-							$button.text(SessionQuotaProFrontend.i18n.success);
+							$button.text(SessionQuotaFrontend.i18n.success);
 						}, 100);
 
 						// Reload page after 2 seconds to update session list
@@ -85,7 +85,7 @@ import './frontend.css';
 						$message
 							.removeClass('sessionquota-success')
 							.addClass('sessionquota-error')
-							.text(response.data.message || SessionQuotaProFrontend.i18n.error)
+							.text(response.data.message || SessionQuotaFrontend.i18n.error)
 							.fadeIn();
 
 						$button.prop('disabled', false);
@@ -95,7 +95,7 @@ import './frontend.css';
 					$message
 						.removeClass('sessionquota-success')
 						.addClass('sessionquota-error')
-						.text(SessionQuotaProFrontend.i18n.error)
+						.text(SessionQuotaFrontend.i18n.error)
 						.fadeIn();
 
 					$button.prop('disabled', false);
@@ -116,22 +116,22 @@ import './frontend.css';
 			const token = $button.data('token');
 
 			// Confirm action
-			if (!confirm(SessionQuotaProFrontend.i18n.confirmSingle)) {
+			if (!confirm(SessionQuotaFrontend.i18n.confirmSingle)) {
 				return;
 			}
 
 			// Disable button
 			const originalText = $button.text();
-			$button.prop('disabled', true).text(SessionQuotaProFrontend.i18n.loggingOutSingle);
+			$button.prop('disabled', true).text(SessionQuotaFrontend.i18n.loggingOutSingle);
 			$message.hide();
 
 			// Send AJAX request
 			$.ajax({
-				url: SessionQuotaProFrontend.ajaxUrl,
+				url: SessionQuotaFrontend.ajaxUrl,
 				type: 'POST',
 				data: {
 					action: 'sessionquota_destroy_session',
-					nonce: SessionQuotaProFrontend.nonce,
+					nonce: SessionQuotaFrontend.nonce,
 					token: token
 				},
 				success: function(response) {
@@ -173,7 +173,7 @@ import './frontend.css';
 						$message
 							.removeClass('sessionquota-success')
 							.addClass('sessionquota-error')
-							.text(response.data.message || SessionQuotaProFrontend.i18n.error)
+							.text(response.data.message || SessionQuotaFrontend.i18n.error)
 							.fadeIn();
 
 						$button.prop('disabled', false).text(originalText);
@@ -183,7 +183,7 @@ import './frontend.css';
 					$message
 						.removeClass('sessionquota-success')
 						.addClass('sessionquota-error')
-						.text(SessionQuotaProFrontend.i18n.error)
+						.text(SessionQuotaFrontend.i18n.error)
 						.fadeIn();
 
 					$button.prop('disabled', false).text(originalText);

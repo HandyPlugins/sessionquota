@@ -111,393 +111,16 @@
 		--tw-contain-paint:  ;
 		--tw-contain-style:  ;
 }
-.\!container {
-		width: 100% !important;
-}
-.container {
-		width: 100%;
-}
-@media (min-width: 640px) {
-
-		.\!container {
-				max-width: 640px !important;
-		}
-
-		.container {
-				max-width: 640px;
-		}
-}
-@media (min-width: 768px) {
-
-		.\!container {
-				max-width: 768px !important;
-		}
-
-		.container {
-				max-width: 768px;
-		}
-}
-@media (min-width: 1024px) {
-
-		.\!container {
-				max-width: 1024px !important;
-		}
-
-		.container {
-				max-width: 1024px;
-		}
-}
-@media (min-width: 1280px) {
-
-		.\!container {
-				max-width: 1280px !important;
-		}
-
-		.container {
-				max-width: 1280px;
-		}
-}
-@media (min-width: 1536px) {
-
-		.\!container {
-				max-width: 1536px !important;
-		}
-
-		.container {
-				max-width: 1536px;
-		}
-}
-/* Custom admin styles */
 .sessionquota-settings {
 		margin-top: 20px;
 	}
-/* WordPress admin compatibility adjustments */
 .sessionquota-settings * {
 		box-sizing: border-box;
 	}
-/* ==========================================================================
-	   Tab Navigation - Modern & Accessible Design
-	   ========================================================================== */
-.sessionquota-tabs-container {
-		background: #fff;
-		border-radius: 0.5rem;
-		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-		margin-bottom: 1.5rem;
-		overflow: hidden;
+/* Keep the info icon aligned with hint text. */
+#enforcement-disabled-hint .dashicons {
+		vertical-align: text-bottom;
 	}
-.sessionquota-tabs-nav {
-		display: flex;
-		border-bottom: 1px solid #e5e7eb;
-		padding: 0;
-		margin: 0;
-		gap: 0;
-		overflow-x: auto;
-		overflow-y: hidden;
-		-webkit-overflow-scrolling: touch;
-		scrollbar-width: none; /* Firefox */
-		-ms-overflow-style: none; /* IE and Edge */
-	}
-.sessionquota-tabs-nav::-webkit-scrollbar {
-		display: none; /* Chrome, Safari, Opera */
-	}
-.sessionquota-tab-button {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 1rem 1.5rem;
-		font-size: 0.875rem;
-		font-weight: 500;
-		color: #6b7280;
-		background: transparent;
-		border: none;
-		border-bottom: 3px solid transparent;
-		cursor: pointer;
-		white-space: nowrap;
-		transition: all 0.15s ease-in-out;
-		position: relative;
-		margin-bottom: -1px;
-	}
-.sessionquota-tab-button:hover {
-		color: #374151;
-		background: #f9fafb;
-	}
-.sessionquota-tab-button:focus {
-		outline: none;
-		box-shadow: inset 0 0 0 2px #818cf8;
-		background: #f5f3ff;
-	}
-.sessionquota-tab-button:focus-visible {
-		outline: 2px solid #6366f1;
-		outline-offset: -2px;
-	}
-.sessionquota-tab-button.sessionquota-tab-active {
-		color: #4f46e5;
-		border-bottom-color: #4f46e5;
-		background: #f5f3ff;
-		font-weight: 600;
-	}
-.sessionquota-tab-button .dashicons {
-		font-size: 18px;
-		width: 18px;
-		height: 18px;
-		line-height: 1;
-	}
-.sessionquota-tab-button.sessionquota-tab-active .dashicons {
-		color: #4f46e5;
-	}
-.sessionquota-tab-label {
-		display: inline-block;
-	}
-/* Tab panels with smooth transitions */
-.sessionquota-tab-panels {
-		min-height: 300px;
-	}
-@keyframes sessionquota-fadeIn {
-
-		from {
-				opacity: 0;
-				transform: translateY(4px);
-		}
-
-		to {
-				opacity: 1;
-				transform: translateY(0);
-		}
-}
-.sessionquota-tab-panel {
-		animation: sessionquota-fadeIn 0.2s ease-out;
-}
-.sessionquota-tab-panel.hidden {
-		display: none;
-	}
-.sessionquota-tab-panel:focus {
-		outline: none;
-	}
-/* ==========================================================================
-	   Notification Banner - For License Errors and Alerts
-	   ========================================================================== */
-.sessionquota-notification {
-		display: flex;
-		align-items: flex-start;
-		padding: 1rem;
-		border-radius: 0.5rem;
-		margin-bottom: 1rem;
-	}
-@keyframes sessionquota-slideIn {
-
-		from {
-				opacity: 0;
-				transform: translateY(-0.5rem);
-		}
-
-		to {
-				opacity: 1;
-				transform: translateY(0);
-		}
-}
-.sessionquota-notification {
-		animation: sessionquota-slideIn 0.3s ease-out;
-}
-.sessionquota-notification-error {
-		background-color: #fef2f2;
-		border-right: 4px solid #ef4444;
-	}
-.sessionquota-notification-success {
-		background-color: #f0fdf4;
-		border-right: 4px solid #22c55e;
-	}
-.sessionquota-notification-warning {
-		background-color: #fffbeb;
-		border-right: 4px solid #f59e0b;
-	}
-.sessionquota-notification-info {
-		background-color: #eff6ff;
-		border-right: 4px solid #3b82f6;
-	}
-.sessionquota-notification-icon {
-		flex-shrink: 0;
-		margin-left: 0.75rem;
-	}
-.sessionquota-notification-content {
-		flex: 1;
-		min-width: 0;
-	}
-.sessionquota-notification-title {
-		font-weight: 600;
-		font-size: 0.875rem;
-		margin: 0 0 0.25rem;
-	}
-.sessionquota-notification-message {
-		font-size: 0.875rem;
-		margin: 0;
-		color: #4b5563;
-	}
-.sessionquota-notification-dismiss {
-		flex-shrink: 0;
-		margin-right: 0.75rem;
-		background: transparent;
-		border: none;
-		cursor: pointer;
-		padding: 0.25rem;
-		border-radius: 0.25rem;
-		color: #9ca3af;
-		transition: color 0.15s, background-color 0.15s;
-	}
-.sessionquota-notification-dismiss:hover {
-		color: #6b7280;
-		background-color: rgba(0, 0, 0, 0.05);
-	}
-.sessionquota-notification-dismiss:focus {
-		outline: 2px solid currentColor;
-		outline-offset: 2px;
-	}
-/* ==========================================================================
-	   Form Elements & Polish
-	   ========================================================================== */
-/* Ensure search dropdown appears above WordPress admin elements */
-.sessionquota-settings #sessionquota-user-search-results {
-		z-index: 999999 !important;
-		position: absolute;
-	}
-/* Polish: Better form element spacing */
-.sessionquota-pro-settings input[type="text"],
-	.sessionquota-pro-settings input[type="number"],
-	.sessionquota-pro-settings input[type="email"] {
-		padding: 0.5rem 0.75rem;
-	}
-/* Polish: Card shadows */
-.sessionquota-pro-settings .bg-white.shadow {
-		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-	}
-/* ==========================================================================
-	   Modal & Toast Fixes
-	   ========================================================================== */
-/* Fix: Ensure modal appears above everything */
-#sessionquota-confirm-modal {
-		z-index: 999999 !important;
-	}
-/* Fix: Toast notification positioning */
-#sessionquota-toast {
-		z-index: 999999 !important;
-	}
-/* ==========================================================================
-	   SVG Icon Alignment Fixes
-	   ========================================================================== */
-/* Fix SVG alignment in flex containers */
-.sessionquota-pro-settings svg {
-		flex-shrink: 0;
-		vertical-align: middle;
-	}
-/* Fix icon container alignment in alert boxes */
-.sessionquota-pro-settings [class*="bg-yellow-50"] .flex > .flex-shrink-0,
-	.sessionquota-pro-settings [class*="bg-green-50"] .flex > .flex-shrink-0,
-	.sessionquota-pro-settings [class*="bg-red-50"] .flex > .flex-shrink-0,
-	.sessionquota-pro-settings [class*="bg-blue-50"] .flex > .flex-shrink-0 {
-		display: flex;
-		align-items: flex-start;
-		padding-top: 0.125rem;
-	}
-/* Fix modal icon container - center the icon properly */
-#sessionquota-confirm-modal .flex-shrink-0.flex.items-center.justify-center {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-#sessionquota-confirm-modal .flex-shrink-0.flex.items-center.justify-center svg {
-		display: block;
-		flex-shrink: 0;
-	}
-/* Fix inline-flex button icon alignment */
-.sessionquota-pro-settings button svg,
-	.sessionquota-pro-settings a svg {
-		vertical-align: middle;
-		display: inline-block;
-	}
-/* Ensure consistent icon sizing */
-.sessionquota-pro-settings svg[class*="h-5"][class*="w-5"] {
-		width: 1.25rem;
-		height: 1.25rem;
-		min-width: 1.25rem;
-		min-height: 1.25rem;
-	}
-.sessionquota-pro-settings svg[class*="h-4"][class*="w-4"] {
-		width: 1rem;
-		height: 1rem;
-		min-width: 1rem;
-		min-height: 1rem;
-	}
-.sessionquota-pro-settings svg[class*="h-6"][class*="w-6"] {
-		width: 1.5rem;
-		height: 1.5rem;
-		min-width: 1.5rem;
-		min-height: 1.5rem;
-	}
-/* ==========================================================================
-	   Accessibility Enhancements
-	   ========================================================================== */
-/* Screen reader only text */
-.sessionquota-sr-only,
-	.sr-only {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
-		white-space: nowrap;
-		border: 0;
-	}
-/* Focus visible for keyboard users */
-.sessionquota-pro-settings button:focus-visible,
-	.sessionquota-pro-settings a:focus-visible,
-	.sessionquota-pro-settings input:focus-visible,
-	.sessionquota-pro-settings select:focus-visible {
-		outline: 2px solid #6366f1;
-		outline-offset: 2px;
-	}
-/* Skip link for keyboard navigation */
-.sessionquota-skip-link {
-		position: absolute;
-		top: -40px;
-		right: 0;
-		background: #4f46e5;
-		color: #fff;
-		padding: 0.5rem 1rem;
-		z-index: 100000;
-		transition: top 0.3s;
-	}
-.sessionquota-skip-link:focus {
-		top: 0;
-	}
-/* Spinner animation */
-@keyframes sessionquota-spin {
-
-		from {
-				transform: rotate(0deg);
-		}
-
-		to {
-				transform: rotate(-360deg);
-		}
-}
-.animate-spin {
-		animation: sessionquota-spin 1s linear infinite;
-}
-.sr-only {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
-		white-space: nowrap;
-		border-width: 0;
-}
-.visible {
-		visibility: visible;
-}
 .collapse {
 		visibility: collapse;
 }
@@ -514,9 +137,6 @@
 		margin-right: auto;
 		margin-left: auto;
 }
-.mr-1\.5 {
-		margin-left: 0.375rem;
-}
 .mt-2 {
 		margin-top: 0.5rem;
 }
@@ -526,47 +146,17 @@
 .block {
 		display: block;
 }
-.inline {
-		display: inline;
-}
 .flex {
 		display: flex;
-}
-.inline-flex {
-		display: inline-flex;
 }
 .table {
 		display: table;
 }
-.hidden {
-		display: none;
-}
-.h-4 {
-		height: 1rem;
-}
-.h-5 {
-		height: 1.25rem;
-}
-.h-6 {
-		height: 1.5rem;
-}
 .w-24 {
 		width: 6rem;
 }
-.w-4 {
-		width: 1rem;
-}
-.w-5 {
-		width: 1.25rem;
-}
-.w-6 {
-		width: 1.5rem;
-}
 .max-w-5xl {
 		max-width: 64rem;
-}
-.flex-shrink {
-		flex-shrink: 1;
 }
 .flex-shrink-0 {
 		flex-shrink: 0;
@@ -574,32 +164,11 @@
 .border-collapse {
 		border-collapse: collapse;
 }
-.transform {
-		transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-@keyframes spin {
-
-		to {
-				transform: rotate(-360deg);
-		}
-}
-.animate-spin {
-		animation: spin 1s linear infinite;
-}
-.cursor-pointer {
-		cursor: pointer;
-}
 .flex-wrap {
 		flex-wrap: wrap;
 }
 .items-start {
 		align-items: flex-start;
-}
-.items-center {
-		align-items: center;
-}
-.justify-center {
-		justify-content: center;
 }
 .space-y-3 > :not([hidden]) ~ :not([hidden]) {
 		--tw-space-y-reverse: 0;
@@ -618,42 +187,13 @@
 .border {
 		border-width: 1px;
 }
-.border-b {
-		border-bottom-width: 1px;
-}
 .border-gray-300 {
 		--tw-border-opacity: 1;
 		border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
 }
-.bg-blue-50 {
-		--tw-bg-opacity: 1;
-		background-color: rgb(239 246 255 / var(--tw-bg-opacity, 1));
-}
-.bg-gray-500 {
-		--tw-bg-opacity: 1;
-		background-color: rgb(107 114 128 / var(--tw-bg-opacity, 1));
-}
-.bg-green-50 {
-		--tw-bg-opacity: 1;
-		background-color: rgb(240 253 244 / var(--tw-bg-opacity, 1));
-}
-.bg-red-50 {
-		--tw-bg-opacity: 1;
-		background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
-}
 .bg-white {
 		--tw-bg-opacity: 1;
 		background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-}
-.bg-yellow-50 {
-		--tw-bg-opacity: 1;
-		background-color: rgb(254 252 232 / var(--tw-bg-opacity, 1));
-}
-.bg-opacity-75 {
-		--tw-bg-opacity: 0.75;
-}
-.p-3 {
-		padding: 0.75rem;
 }
 .px-4 {
 		padding-right: 1rem;
@@ -671,35 +211,12 @@
 		font-size: 0.875rem;
 		line-height: 1.25rem;
 }
-.text-xs {
-		font-size: 0.75rem;
-		line-height: 1rem;
-}
 .font-medium {
 		font-weight: 500;
-}
-.uppercase {
-		text-transform: uppercase;
 }
 .text-amber-600 {
 		--tw-text-opacity: 1;
 		color: rgb(217 119 6 / var(--tw-text-opacity, 1));
-}
-.text-blue-400 {
-		--tw-text-opacity: 1;
-		color: rgb(96 165 250 / var(--tw-text-opacity, 1));
-}
-.text-blue-500 {
-		--tw-text-opacity: 1;
-		color: rgb(59 130 246 / var(--tw-text-opacity, 1));
-}
-.text-blue-800 {
-		--tw-text-opacity: 1;
-		color: rgb(30 64 175 / var(--tw-text-opacity, 1));
-}
-.text-gray-400 {
-		--tw-text-opacity: 1;
-		color: rgb(156 163 175 / var(--tw-text-opacity, 1));
 }
 .text-gray-500 {
 		--tw-text-opacity: 1;
@@ -713,50 +230,12 @@
 		--tw-text-opacity: 1;
 		color: rgb(55 65 81 / var(--tw-text-opacity, 1));
 }
-.text-gray-900 {
-		--tw-text-opacity: 1;
-		color: rgb(17 24 39 / var(--tw-text-opacity, 1));
-}
-.text-green-400 {
-		--tw-text-opacity: 1;
-		color: rgb(74 222 128 / var(--tw-text-opacity, 1));
-}
-.text-green-500 {
-		--tw-text-opacity: 1;
-		color: rgb(34 197 94 / var(--tw-text-opacity, 1));
-}
-.text-green-800 {
-		--tw-text-opacity: 1;
-		color: rgb(22 101 52 / var(--tw-text-opacity, 1));
-}
 .text-indigo-600 {
 		--tw-text-opacity: 1;
 		color: rgb(79 70 229 / var(--tw-text-opacity, 1));
 }
-.text-red-400 {
-		--tw-text-opacity: 1;
-		color: rgb(248 113 113 / var(--tw-text-opacity, 1));
-}
-.text-red-500 {
-		--tw-text-opacity: 1;
-		color: rgb(239 68 68 / var(--tw-text-opacity, 1));
-}
-.text-red-800 {
-		--tw-text-opacity: 1;
-		color: rgb(153 27 27 / var(--tw-text-opacity, 1));
-}
-.text-yellow-500 {
-		--tw-text-opacity: 1;
-		color: rgb(234 179 8 / var(--tw-text-opacity, 1));
-}
-.opacity-25 {
-		opacity: 0.25;
-}
 .opacity-50 {
 		opacity: 0.5;
-}
-.opacity-75 {
-		opacity: 0.75;
 }
 .shadow {
 		--tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -768,148 +247,27 @@
 		--tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
 		box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.outline {
-		outline-style: solid;
-}
-.blur {
-		--tw-blur: blur(8px);
-		filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-.filter {
-		filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-.backdrop-filter {
-		backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-}
 .transition {
 		transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		transition-duration: 150ms;
 }
-
-
-/* Responsive media queries outside @layer */
-@media (max-width: 768px) {
-	.sessionquota-tab-button {
-		padding: 0.75rem 1rem;
-		font-size: 0.8125rem;
-	}
-
-	.sessionquota-tab-button .dashicons {
-		font-size: 16px;
-		width: 16px;
-		height: 16px;
-	}
-}
-
-/* Submit button outside @layer to avoid @apply issue */
-.sessionquota-settings .submit input[type="submit"] {
-	background-color: #4f46e5;
-	color: white;
-	padding: 0.5rem 1rem;
-	border-radius: 0.375rem;
-	border: none;
-	cursor: pointer;
-	font-weight: 500;
-}
-
-.sessionquota-settings .submit input[type="submit"]:hover {
-	background-color: #4338ca;
-}
-
-.sessionquota-settings .submit input[type="submit"]:focus {
-	outline: none;
-	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #4f46e5;
-}
-
-/* PRO Badge for locked tabs */
-.sessionquota-pro-badge {
-	display: inline-flex;
-	align-items: center;
-	padding: 0.125rem 0.5rem;
-	font-size: 0.625rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	color: #9333ea;
-	background: linear-gradient(-135deg, #f5f3ff 0%, #ede9fe 100%);
-	border-radius: 9999px;
-	border: 1px solid #c4b5fd;
-	margin-right: 0.5rem;
-}
-
-/* ==========================================================================
-   PRO Feature Paywall Overlay
-   ========================================================================== */
-
-.sessionquota-pro-feature-container {
-	position: relative;
-	min-height: 400px;
-}
-
-.sessionquota-pro-overlay {
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
-	z-index: 10;
-	display: flex;
-	align-items: flex-start;
-	justify-content: center;
-	padding-top: 3rem;
-	background: rgba(255, 255, 255, 0.85);
-	backdrop-filter: blur(2px);
-	border-radius: 0.5rem;
-}
-
-.sessionquota-pro-overlay-content {
-	text-align: center;
-	padding: 2rem;
-	max-width: 28rem;
-}
-
-.sessionquota-pro-overlay-content h3 {
-	font-size: 1.25rem;
-	font-weight: 700;
-	color: #111827;
-	margin-bottom: 0.5rem;
-}
-
-.sessionquota-pro-overlay-content p {
-	color: #4b5563;
-	margin-bottom: 1rem;
-}
-
-.last\:border-b-0:last-child {
-		border-bottom-width: 0px;
-}
-
-.hover\:bg-gray-100:hover {
-		--tw-bg-opacity: 1;
-		background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
-}
-
 .focus\:border-indigo-300:focus {
 		--tw-border-opacity: 1;
 		border-color: rgb(165 180 252 / var(--tw-border-opacity, 1));
 }
-
 .focus\:ring:focus {
 		--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
 		--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
 		box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
-
 .focus\:ring-indigo-200:focus {
 		--tw-ring-opacity: 1;
 		--tw-ring-color: rgb(199 210 254 / var(--tw-ring-opacity, 1));
 }
-
 .focus\:ring-opacity-50:focus {
 		--tw-ring-opacity: 0.5;
 }
-
 @media (min-width: 640px) {
 
 		.sm\:rounded-lg {
@@ -920,5 +278,4 @@
 				padding: 1.5rem;
 		}
 }
-
 

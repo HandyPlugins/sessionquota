@@ -89,28 +89,12 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: includes/Admin/Settings.php:460
-msgid "Monitoring"
-msgstr ""
-
 #: includes/Admin/views/settings.php:41
 msgid "Save Settings"
 msgstr ""
 
 #: includes/Core/Engine/LimitResolver.php:197
 msgid "Strict Single Session"
-msgstr ""
-
-#: includes/Core/Engine/LimitResolver.php:206
-msgid "User Override"
-msgstr ""
-
-#: includes/Core/Engine/LimitResolver.php:215
-msgid "Membership Level"
-msgstr ""
-
-#: includes/Core/Engine/LimitResolver.php:224
-msgid "User Role"
 msgstr ""
 
 #: includes/Core/Engine/LimitResolver.php:231
@@ -234,11 +218,6 @@ msgstr ""
 #: assets/build/admin.js:3
 #: assets/src/admin.js:608
 msgid "Unknown"
-msgstr ""
-
-#: assets/build/admin.js:3
-#: assets/src/admin.js:613
-msgid "Invalid settings file. Please select a valid SessionQuota PRO export file."
 msgstr ""
 
 #: assets/build/admin.js:3

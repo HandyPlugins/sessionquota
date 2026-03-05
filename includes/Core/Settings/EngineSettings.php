@@ -20,14 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class EngineSettings {
 
 	/**
-	 * Shared option key used by both Free and PRO.
+	 * Settings option key used by plugin editions.
 	 */
 	const OPTION_NAME = 'sessionquota_settings';
-
-	/**
-	 * Default user meta key for per-user session limit override.
-	 */
-	const DEFAULT_USER_LIMIT_META_KEY = '_sessionquota_limit';
 
 	/**
 	 * Get settings option name.
@@ -39,28 +34,19 @@ class EngineSettings {
 	}
 
 	/**
-	 * Get shared default settings schema.
+	 * Get base shared settings schema.
 	 *
 	 * @return array
 	 */
 	public static function get_default_settings() {
 		return array(
-			'session_limit'                        => 1,
-			'enforcement_mode'                     => 'logout_oldest',
-			'role_limits'                          => array(),
-			'membership_enabled'                   => false,
-			'membership_limits'                    => array(),
-			'frontend_integration_enabled'         => true,
-			'blocked_login_email_recovery_enabled' => false,
-			'blocked_login_email_cooldown_minutes' => 5,
-			'blocked_login_email_link_ttl_minutes' => 30,
+			'session_limit'    => 1,
+			'enforcement_mode' => 'logout_oldest',
 		);
 	}
 
 	/**
-	 * Get shared settings for engine usage.
-	 *
-	 * Pro can override retrieval (for network options) via filter.
+	 * Get settings for engine usage.
 	 *
 	 * @param mixed $default_value Default value.
 	 * @return array
@@ -70,6 +56,7 @@ class EngineSettings {
 			$default_value = self::get_default_settings();
 		}
 
+		// Allow external integrations to provide storage source (for example network options).
 		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Hook constant is prefixed in Contracts\Hooks.
 		$filtered = apply_filters( Hooks::FILTER_SETTINGS, null, $default_value );
 		if ( is_array( $filtered ) ) {
@@ -97,15 +84,5 @@ class EngineSettings {
 		$mode = isset( $settings['enforcement_mode'] ) ? sanitize_key( $settings['enforcement_mode'] ) : '';
 
 		return 'logout_all_others' === $mode;
-	}
-
-	/**
-	 * Get user meta key used for per-user override.
-	 *
-	 * @return string
-	 */
-	public static function get_user_limit_meta_key() {
-		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Hook constant is prefixed in Contracts\Hooks.
-		return (string) apply_filters( Hooks::FILTER_USER_LIMIT_META_KEY, self::DEFAULT_USER_LIMIT_META_KEY );
 	}
 }

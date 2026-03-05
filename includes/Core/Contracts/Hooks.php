@@ -33,12 +33,12 @@ class Hooks {
 	const FILTER_SETTINGS = 'sessionquota_settings_provider';
 
 	/**
-	 * Filter to provide membership-based session limit.
+	 * Filter to resolve the effective limit for a user.
 	 */
-	const FILTER_MEMBERSHIP_LIMIT = 'sessionquota_membership_limit';
+	const FILTER_RESOLVED_LIMIT = 'sessionquota_resolved_limit';
 
 	/**
-	 * Filter to provide user-meta key used for per-user limit override.
+	 * Filter to resolve limit info payload for a user.
 	 */
-	const FILTER_USER_LIMIT_META_KEY = 'sessionquota_user_limit_meta_key';
+	const FILTER_LIMIT_INFO = 'sessionquota_limit_info';
 }
