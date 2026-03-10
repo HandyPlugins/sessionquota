@@ -63,10 +63,13 @@ Go to `Settings -> SessionQuota` in wp-admin.
 = What happens when the session limit is set to 0? =
 `0` means unlimited sessions. In this case, session limiting is effectively disabled unless you choose `Logout all other sessions` (single-session mode).
 
+== Screenshots ==
+
+1. Settings Page
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.0.0 (Mar 10, 2026) =
 * Initial release.
 
 == Upgrade Notice ==
