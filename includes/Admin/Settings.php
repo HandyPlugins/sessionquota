@@ -32,12 +32,26 @@ class Settings {
 	private $page_slug = 'sessionquota';
 
 	/**
+	 * Current settings tab.
+	 *
+	 * @var string
+	 */
+	private $current_tab = 'general';
+
+	/**
 	 * Constructor.
 	 */
 	private function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_filter( 'plugin_action_links_' . SESSIONQUOTA_BASENAME, array( $this, 'add_plugin_action_links' ) );
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only navigation state.
+		$requested_tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'general';
+		if ( in_array( $requested_tab, array( 'general', 'advanced', 'tools', 'monitoring' ), true ) ) {
+			$this->current_tab = $requested_tab;
+		}
 	}
 
 	/**
@@ -83,6 +97,29 @@ class Settings {
 			$this->page_slug,
 			array( $this, 'render_settings_page' )
 		);
+	}
+
+	/**
+	 * Add quick links to the Plugins screen.
+	 *
+	 * @param array $links Existing plugin action links.
+	 * @return array
+	 */
+	public function add_plugin_action_links( $links ) {
+		$settings_link = sprintf(
+			'<a href="%1$s">%2$s</a>',
+			esc_url( admin_url( 'options-general.php?page=' . $this->page_slug ) ),
+			esc_html__( 'Settings', 'sessionquota' )
+		);
+		$upgrade_link  = sprintf(
+			'<a href="%1$s" target="_blank" rel="noopener noreferrer" style="font-weight:600;color:#4f46e5;">%2$s</a>',
+			esc_url( $this->get_upgrade_url( 'plugin_action_link' ) ),
+			esc_html__( 'Upgrade to Pro', 'sessionquota' )
+		);
+
+		array_unshift( $links, $settings_link, $upgrade_link );
+
+		return $links;
 	}
 
 	/**
@@ -245,7 +282,7 @@ class Settings {
 			$settings = array();
 		}
 
-		$defaults = self::get_default_settings();
+		$defaults  = self::get_default_settings();
 		$existing  = self::get_settings();
 		$sanitized = $defaults;
 		if ( ! is_array( $existing ) ) {
@@ -328,6 +365,35 @@ class Settings {
 				<?php esc_html_e( 'Set the session limit to 1 or higher to enable block and logout-oldest modes. Strict mode remains available.', 'sessionquota' ); ?>
 			</p>
 		<?php endif; ?>
+		<?php $this->render_blocked_login_recovery_preview( $current_mode ); ?>
+		<?php
+	}
+
+	/**
+	 * Render a non-functional preview of Pro recovery controls.
+	 *
+	 * @param string $current_mode Selected enforcement mode.
+	 * @return void
+	 */
+	private function render_blocked_login_recovery_preview( $current_mode ) {
+		$is_visible = 'block' === $current_mode;
+		?>
+		<div id="sessionquota-block-mode-options" class="sessionquota-locked-inline <?php echo $is_visible ? '' : 'hidden'; ?>">
+			<div class="sessionquota-locked-inline-heading">
+				<span class="dashicons dashicons-lock" aria-hidden="true"></span>
+				<strong><?php esc_html_e( 'Blocked login recovery', 'sessionquota' ); ?></strong>
+				<span class="sessionquota-pro-badge"><?php esc_html_e( 'PRO', 'sessionquota' ); ?></span>
+			</div>
+			<label class="sessionquota-disabled-control">
+				<input type="checkbox" disabled>
+				<span><?php esc_html_e( 'Let blocked users recover access with a secure email link', 'sessionquota' ); ?></span>
+			</label>
+			<p><?php esc_html_e( 'Users can end their other active sessions and try the login again without contacting an administrator.', 'sessionquota' ); ?></p>
+			<a href="<?php echo esc_url( $this->get_upgrade_url( 'blocked_login_recovery' ) ); ?>" target="_blank" rel="noopener noreferrer">
+				<?php esc_html_e( 'Unlock blocked login recovery', 'sessionquota' ); ?>
+				<span class="dashicons dashicons-arrow-right-alt2 sessionquota-locked-inline-arrow" aria-hidden="true"></span>
+			</a>
+		</div>
 		<?php
 	}
 
@@ -359,6 +425,56 @@ class Settings {
 			return;
 		}
 
+		$sessionquota_tabs        = $this->get_tabs();
+		$sessionquota_current_tab = $this->current_tab;
+
 		require_once SESSIONQUOTA_PATH . 'includes/Admin/views/settings.php';
+	}
+
+	/**
+	 * Get settings tabs.
+	 *
+	 * @return array
+	 */
+	private function get_tabs() {
+		return array(
+			'general'    => array(
+				'label' => __( 'General', 'sessionquota' ),
+				'icon'  => 'dashicons-admin-generic',
+			),
+			'advanced'   => array(
+				'label' => __( 'Advanced Limits', 'sessionquota' ),
+				'icon'  => 'dashicons-filter',
+				'pro'   => true,
+			),
+			'tools'      => array(
+				'label' => __( 'Tools', 'sessionquota' ),
+				'icon'  => 'dashicons-admin-tools',
+				'pro'   => true,
+			),
+			'monitoring' => array(
+				'label' => __( 'Monitoring', 'sessionquota' ),
+				'icon'  => 'dashicons-chart-area',
+				'pro'   => true,
+			),
+		);
+	}
+
+	/**
+	 * Build a trackable SessionQuota Pro link.
+	 *
+	 * @param string $content Link placement identifier.
+	 * @return string
+	 */
+	private function get_upgrade_url( $content ) {
+		return add_query_arg(
+			array(
+				'utm_source'   => 'sessionquota',
+				'utm_medium'   => 'plugin',
+				'utm_campaign' => 'free_to_pro',
+				'utm_content'  => sanitize_key( $content ),
+			),
+			'https://handyplugins.co/sessionquota-pro/'
+		);
 	}
 }
