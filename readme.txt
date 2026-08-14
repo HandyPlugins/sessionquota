@@ -2,9 +2,9 @@
 Contributors:      handyplugins
 Tags:              concurrent-login, account-sharing, session-limit, user-sessions, login-security
 Requires at least: 5.9
-Tested up to:      7.0
+Tested up to:      7.1
 Requires PHP:      7.4
-Stable tag:        1.0.0
+Stable tag:        1.1.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -135,13 +135,13 @@ Yes. Uninstalling the plugin through WordPress removes the `sessionquota_setting
 
 == Changelog ==
 
-= Unreleased =
-* Added locked previews for advanced limits, admin tools, and security monitoring available in SessionQuota Pro.
+= 1.1.0 (Aug 10, 2026) =
+* Added locked previews.
 * Added a blocked-login recovery preview when using block mode.
 * Added direct access to SessionQuota Pro from the settings and Plugins screens.
 * Improved keyboard navigation and accessibility for settings tabs.
-* Reworked the plugin listing to better explain free and Pro functionality.
-* Confirmed compatibility with WordPress 7.0.
+* Confirmed compatibility with WordPress 7.1
+* Dependency Updates.
 
 = 1.0.0 (Mar 10, 2026) =
 * Initial release.

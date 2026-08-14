@@ -2,8 +2,8 @@
 /**
  * Plugin Name: SessionQuota
  * Plugin URI: https://github.com/HandyPlugins/sessionquota
- * Description: Limit concurrent user sessions with simple session management.
- * Version: 1.0.0
+ * Description: Limit concurrent WordPress logins and prevent account sharing.
+ * Version: 1.1.0
  * Author: HandyPlugins
  * Author URI: https://handyplugins.co/
  * Text Domain: sessionquota
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'SESSIONQUOTA_VERSION', '1.0.0' );
+define( 'SESSIONQUOTA_VERSION', '1.1.0' );
 define( 'SESSIONQUOTA_FILE', __FILE__ );
 define( 'SESSIONQUOTA_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SESSIONQUOTA_URL', plugin_dir_url( __FILE__ ) );

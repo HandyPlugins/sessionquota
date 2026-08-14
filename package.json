@@ -1,6 +1,6 @@
 {
   "name": "sessionquota",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Limit concurrent user sessions in WordPress with simple session management",
   "main": "index.js",
   "scripts": {
