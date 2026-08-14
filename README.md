@@ -5,6 +5,8 @@ Limit concurrent user sessions in WordPress with simple, configurable enforcemen
 ## Links
 
 - Plugin page: https://wordpress.org/plugins/sessionquota/
+- PRO: https://handyplugins.co/sessionquota-pro/
+- Documentation: https://handyplugins.co/docs-category/sessionquota-pro/
 
 ## Features
 
@@ -14,6 +16,11 @@ Limit concurrent user sessions in WordPress with simple, configurable enforcemen
 	- Logout oldest session(s)
 	- Logout all other sessions (single-session mode)
 - Simple settings page under **Settings → SessionQuota**
+- In-dashboard previews of advanced PRO limits, tools, and monitoring
+
+## SessionQuota PRO
+
+SessionQuota PRO adds role and membership limits, per-user overrides, frontend session controls, blocked-login recovery, monitoring, WP-CLI commands, and multisite support.
 
 ## Support
 
